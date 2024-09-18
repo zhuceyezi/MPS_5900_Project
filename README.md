@@ -8,3 +8,7 @@ Branching:
 |Dev             |A testing place to test the frontend/backend intergration.                                                      |
 |Frontend        |All development of frontend should happen here. Can merge into dev when testing system integration is needed.   |
 |Backend         | All backend development happens here. Can merge into dev when tesing system integration is needed.             |
+
+
+However, it is still **highly recommended** that each person creates his/her own branch and rely on pull requests to merge to avoid conflicts.
+See "Pull requests" for an example.
