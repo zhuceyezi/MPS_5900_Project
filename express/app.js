@@ -1,4 +1,4 @@
-const { sequelize } = require("./models");
+const { sequelize, Employee } = require("./models");
 
 require("dotenv").config();
 var express = require("express");
@@ -20,6 +20,31 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+const addSampleEmployee = async () => {
+  try {
+    await Employee.create({
+      imageId: "123",
+      name: "Runyu Yue",
+      lastLogin: new Date(),
+      EmployeeId: "1234",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteEmployeeByName = async (name) => {
+  try {
+    await Employee.destroy({
+      where: {
+        name: name,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // connect and syc to the database
 sequelize
   .authenticate()
@@ -28,6 +53,7 @@ sequelize
       .sync()
       .then(() => {
         console.log("successful connect to database and sync the schemas");
+        deleteEmployeeByName("John Doe");
       })
       .catch((err) => {
         console.log("error during the sync the model process");
@@ -37,10 +63,6 @@ sequelize
   .catch((err) => {
     console.log("error when connecting to database");
     console.log(err);
-    console.log(sequelize.config.host);
-    console.log(sequelize.config.port);
-    console.log(sequelize.config.database);
-    console.log(sequelize.config.username);
   });
 
 module.exports = app;
