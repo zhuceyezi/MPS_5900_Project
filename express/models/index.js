@@ -1,7 +1,7 @@
-const sequelize = require("../config/databaseSetUp");
+const database = require("../config/databaseSetUp").database;
 const Employee = require("./Employee");
 
 module.exports = {
-  sequelize,
+  database,
   Employee,
 };
