@@ -1,8 +1,9 @@
 const { Sequelize } = require("sequelize");
-require("dotenv").config();
+require("dotenv").config("../../.env");
 
 // create a new instance to connect to the database
 // use .env file to store sensitive data for best practices
+console.log(process.env.DB_PASSWORD);
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -20,4 +21,4 @@ const sequelize = new Sequelize(
   }
 );
 
-module.exports = sequelize;
+exports.database = sequelize;
