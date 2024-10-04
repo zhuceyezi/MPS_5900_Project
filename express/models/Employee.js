@@ -1,16 +1,17 @@
 const database = require("../config/databaseSetUp").database;
 const {DataTypes} = require("sequelize");
 
-/**
- *
- * @params ID AUTO NOT NULL
- * @params imageId NOT NULL,
- * @params name NOT NULL,
- * @params lastLogin DEFAULT NULL,
- * @params EmployeeId
- */
+
 const Employee = database.define("Employee", {
     // Model attributes are defined here
+    /**
+     * @typedef {Object} EmployeeAttributes
+     * @property {string|undefined} id
+     * @property {string} imageId
+     * @property {string} employeeName
+     * @property {string|undefined} employeeId
+     * @property {Date} [lastLogin|undefined]
+     */
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,

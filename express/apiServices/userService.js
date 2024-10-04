@@ -1,22 +1,12 @@
 require("dotenv").config({path: "../../.env"});
 const {Employee, database} = require("../models");
 const {Op} = require("sequelize");
-const addSampleEmployee = async () => {
-    try {
-        const values = {
-            imageId     : "1234",
-            employeeName: "Liang Han",
-            lastLogin   : new Date(),
-            employeeId  : "123456"
-        };
-        console.log(values);
-        const newEmployee = await Employee.create(values);
-        console.log(newEmployee.dataValues);
-    } catch (error) {
-        console.log(error);
-    }
-};
-exports.addSampleEmployee = addSampleEmployee;
+
+
+class userService {
+    
+}
+
 
 /**
  *
@@ -29,6 +19,7 @@ async function addEmployee({employeeId, employeeName, imageId}) {
     try {
         console.debug(
             `Adding Employee: ${JSON.stringify(
+                /** @type Employee*/
                 {
                     employeeId,
                     employeeName,
@@ -39,9 +30,9 @@ async function addEmployee({employeeId, employeeName, imageId}) {
             )}`
         );
         const values = {
-            imageId   : imageId,
-            name      : employeeName,
-            lastLogin : new Date(),
+            imageId: imageId,
+            name: employeeName,
+            lastLogin: new Date(),
             employeeId: employeeId
         };
         await Employee.create(values);
@@ -58,7 +49,9 @@ exports.addEmployee = addEmployee;
  *
  * @param name
  * @returns {Promise<boolean>}
+ *
  */
+// TODO: deleteEmployee()
 async function deleteEmployeeByName(name) {
     try {
         console.debug(`Deleting Employee: ${name}`);
@@ -98,8 +91,7 @@ async function updateEmployee({
                     employeeId,
                     lastLogin,
                     employeeName,
-                    imageId,
-                    lastLogin
+                    imageId
                 },
                 null,
                 2
@@ -110,10 +102,10 @@ async function updateEmployee({
         }
         await Employee.update(
             {
-                imageId     : imageId,
-                lastLogin   : lastLogin,
+                imageId: imageId,
+                lastLogin: lastLogin,
                 employeeName: employeeName,
-                employeeId  : employeeId
+                employeeId: employeeId
             },
             {
                 where: {
@@ -136,7 +128,7 @@ database
             .then(async () => {
                 // await addSampleEmployee();
                 const ok = await updateEmployee({
-                                                    imageId   : "1234idid",
+                                                    imageId: "1234idid",
                                                     employeeId: 123456
                                                 });
                 if (!ok) return false;
