@@ -1,4 +1,4 @@
-const database = require("../config/databaseSetUp").database;
+const {database} = require("../config/databaseSetUp");
 const Employee = require("./Employee");
 
 module.exports = {
