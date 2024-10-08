@@ -44,6 +44,7 @@ class userService {
         }
     }
 
+    //I think it should be deleteEmployeeById
     /**
      *
      * @param name
@@ -53,12 +54,12 @@ class userService {
     async deleteEmployeeByName(name) {
         try {
             console.debug(`Deleting Employee: ${name}`);
-            await this.Employee.destroy({
+            const deleteNumber = await this.Employee.destroy({
                                        where: {
                                            employeeName: name
                                        }
                                    });
-            return true;
+            return deleteNumber > 0;
         } catch (error) {
             console.error(error);
             return false;
@@ -96,7 +97,7 @@ class userService {
             if (employeeId === undefined) {
                 throw new Error(`employeeId should be defined`);
             }
-            await this.Employee.update(
+            const resultArray = await this.Employee.update(
                 {
                     imageId: imageId,
                     lastLogin: lastLogin,
@@ -109,6 +110,8 @@ class userService {
                     }
                 }
             );
+            //check if the update was successful
+            return resultArray[0] > 0;
         } catch (e) {
             console.error(e);
             return false;

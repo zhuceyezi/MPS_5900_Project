@@ -25,7 +25,7 @@ class userController {
     //the name should be delivered as request parameter
     async deleteEmployeeByName(req, res){
         try {
-            const {name} = req.params;
+            const name = req.params.name;
             if (name === undefined) return res.status(400).json({message: "Bad request"});
             const deleteResult = await this.userServices.deleteEmployeeByName(name);
             if (deleteResult) return res.status(200).json({message: "Employee deleted"});
@@ -46,7 +46,7 @@ class userController {
             if(employeeId === undefined || employeeName === undefined || imageId === undefined || lastLogin === undefined){
                 return res.status(400).json({message: "Bad request"});
             }
-            const updateResult = this.userServices.updateEmployee({employeeId, lastLogin, employeeName, imageId});
+            const updateResult = await this.userServices.updateEmployee({employeeId, lastLogin, employeeName, imageId});
             if(updateResult) return res.status(200).json({message: "Employee updated"});
             return res.status(404).json({message: "Employee not found"});
         } catch (err){
