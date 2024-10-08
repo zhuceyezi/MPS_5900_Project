@@ -1,145 +1,127 @@
 require("dotenv").config({path: "../../.env"});
-const {Employee, database} = require("../models");
 const {Op} = require("sequelize");
 
 
+
 class userService {
-    
-}
 
-
-/**
- *
- * @param employeeId
- * @param employeeName
- * @param imageId
- * @returns {Promise<boolean>}
- */
-async function addEmployee({employeeId, employeeName, imageId}) {
-    try {
-        console.debug(
-            `Adding Employee: ${JSON.stringify(
-                /** @type Employee*/
-                {
-                    employeeId,
-                    employeeName,
-                    imageId
-                },
-                null,
-                2
-            )}`
-        );
-        const values = {
-            imageId: imageId,
-            name: employeeName,
-            lastLogin: new Date(),
-            employeeId: employeeId
-        };
-        await Employee.create(values);
-        return true;
-    } catch (error) {
-        console.error(error);
-        return false;
+    constructor(EmployeeModel) {
+        this.Employee = EmployeeModel
     }
-}
 
-exports.addEmployee = addEmployee;
-
-/**
- *
- * @param name
- * @returns {Promise<boolean>}
- *
- */
-// TODO: deleteEmployee()
-async function deleteEmployeeByName(name) {
-    try {
-        console.debug(`Deleting Employee: ${name}`);
-        await Employee.destroy({
-                                   where: {
-                                       name: name
-                                   }
-                               });
-        return true;
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
-}
-
-exports.deleteEmployeeByName = deleteEmployeeByName;
-
-/**
- *
- * @param employeeId
- * @param lastLogin
- * @param employeeName
- * @param imageId
- * @param id
- * @returns {Promise<boolean>}
- */
-async function updateEmployee({
-                                  employeeId,
-                                  lastLogin,
-                                  employeeName,
-                                  imageId
-                              } = {}) {
-    try {
-        console.debug(
-            `Updating Employee: ${JSON.stringify(
-                {
-                    employeeId,
-                    lastLogin,
-                    employeeName,
-                    imageId
-                },
-                null,
-                2
-            )}`
-        );
-        if (employeeId === undefined) {
-            throw new Error(`employeeId should be defined`);
-        }
-        await Employee.update(
-            {
+    /**
+     *
+     * @param employeeId
+     * @param employeeName
+     * @param imageId
+     * @returns {Promise<boolean>}
+     */
+    async addEmployee({employeeId, employeeName, imageId}) {
+        try {
+            console.debug(
+                `Adding Employee: ${JSON.stringify(
+                    /** @type Employee*/
+                    {
+                        employeeId,
+                        employeeName,
+                        imageId
+                    },
+                    null,
+                    2
+                )}`
+            );
+            const values = {
                 imageId: imageId,
-                lastLogin: lastLogin,
                 employeeName: employeeName,
+                lastLogin: new Date(),
                 employeeId: employeeId
-            },
-            {
-                where: {
-                    employeeId: employeeId
-                }
-            }
-        );
-    } catch (e) {
-        console.error(e);
-        return false;
+            };
+            await this.Employee.create(values);
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
     }
+
+    //I think it should be deleteEmployeeById
+    /**
+     *
+     * @param name
+     * @returns {Promise<boolean>}
+     *
+     */
+    async deleteEmployeeByName(name) {
+        try {
+            console.debug(`Deleting Employee: ${name}`);
+            const deleteNumber = await this.Employee.destroy({
+                                       where: {
+                                           employeeName: name
+                                       }
+                                   });
+            return deleteNumber > 0;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    /**
+     *
+     * @param employeeId
+     * @param lastLogin
+     * @param employeeName
+     * @param imageId
+     * @param id
+     * @returns {Promise<boolean>}
+     */
+    async updateEmployee({
+                                      employeeId,
+                                      lastLogin,
+                                      employeeName,
+                                      imageId
+                                  } = {}) {
+        try {
+            console.debug(
+                `Updating Employee: ${JSON.stringify(
+                    {
+                        employeeId,
+                        lastLogin,
+                        employeeName,
+                        imageId
+                    },
+                    null,
+                    2
+                )}`
+            );
+            if (employeeId === undefined) {
+                throw new Error(`employeeId should be defined`);
+            }
+            const resultArray = await this.Employee.update(
+                {
+                    imageId: imageId,
+                    lastLogin: lastLogin,
+                    employeeName: employeeName,
+                    employeeId: employeeId
+                },
+                {
+                    where: {
+                        employeeId: employeeId
+                    }
+                }
+            );
+            //check if the update was successful
+            return resultArray[0] > 0;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
+
+
 }
 
-// connect and syc to the database
-database
-    .authenticate()
-    .then(async () => {
-        database
-            .sync()
-            .then(async () => {
-                // await addSampleEmployee();
-                const ok = await updateEmployee({
-                                                    imageId: "1234idid",
-                                                    employeeId: 123456
-                                                });
-                if (!ok) return false;
-                console.log("successful connect to database and sync the schemas");
-            })
-            .catch((err) => {
-                console.log("error during the sync the model process");
-                console.log(err);
-            });
-    })
-    .catch((err) => {
-        console.log("error when connecting to database");
-        console.log(err);
-    });
+
+module.exports = userService;
+
+
