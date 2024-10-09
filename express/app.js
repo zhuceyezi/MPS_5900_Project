@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({path: "../.env"});
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -6,10 +6,10 @@ const logger = require("morgan");
 
 const indexRouter = require("./apiServices");
 const usersRouter = require("./apiServices/users");
-const {database} = require("express/models/models");
+const {database} = require("./models/models");
 const userRouter = require("./routers/userRouter");
-const userServices = require("express/apiServices/UserService");
-const userController = require("express/controllers/UserController");
+const userServices = require("./apiServices/UserService");
+const userController = require("./controllers/UserController");
 const employeeModel = require("./models/Employee");
 
 const app = express();
@@ -42,8 +42,8 @@ database
 app.use("/", indexRouter);
 app.use("/employees", userRouter(userController, userServices, employeeModel));
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`server is running on port ${PORT}`);
-});
+// const PORT = 3000;
+// app.listen(PORT, () => {
+//     console.log(`server is running on port ${PORT}`);
+// });
 module.exports = app;
