@@ -37,6 +37,9 @@ const Employee = database.define("Employee", {
     }
     // This feild is used to store the employee id from company database system
     
-}, {underscored: true});
+}, {
+                                     underscored: true,
+                                     tableName: 'Employee'
+                                 });
 
 module.exports = Employee;

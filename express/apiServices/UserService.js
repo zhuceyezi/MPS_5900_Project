@@ -2,13 +2,12 @@ require("dotenv").config({path: "../../.env"});
 const {Op} = require("sequelize");
 
 
-
-class userService {
-
+class UserService {
+    
     constructor(EmployeeModel) {
         this.Employee = EmployeeModel
     }
-
+    
     /**
      *
      * @param employeeId
@@ -43,7 +42,7 @@ class userService {
             return false;
         }
     }
-
+    
     //I think it should be deleteEmployeeById
     /**
      *
@@ -55,17 +54,17 @@ class userService {
         try {
             console.debug(`Deleting Employee: ${name}`);
             const deleteNumber = await this.Employee.destroy({
-                                       where: {
-                                           employeeName: name
-                                       }
-                                   });
+                                                                 where: {
+                                                                     employeeName: name
+                                                                 }
+                                                             });
             return deleteNumber > 0;
         } catch (error) {
             console.error(error);
             return false;
         }
     }
-
+    
     /**
      *
      * @param employeeId
@@ -76,11 +75,11 @@ class userService {
      * @returns {Promise<boolean>}
      */
     async updateEmployee({
-                                      employeeId,
-                                      lastLogin,
-                                      employeeName,
-                                      imageId
-                                  } = {}) {
+                             employeeId,
+                             lastLogin,
+                             employeeName,
+                             imageId
+                         } = {}) {
         try {
             console.debug(
                 `Updating Employee: ${JSON.stringify(
@@ -117,11 +116,11 @@ class userService {
             return false;
         }
     }
-
-
+    
+    
 }
 
 
-module.exports = userService;
+module.exports = UserService;
 
 
