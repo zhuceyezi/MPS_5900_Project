@@ -13,14 +13,15 @@ const UserFaceMapping = database.define('UserFaceMapping', {
     },
     faceId: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
     },
     imageId: {
         type: DataTypes.STRING,
         allowNull: false
     }
 }, {
-                                            tableName: 'UserFaceMappings',
                                             timestamps: false,
                                             underscored: true
                                         });

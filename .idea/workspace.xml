@@ -4,23 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="added more comments and updated folder names.">
-      <change afterPath="$PROJECT_DIR$/express/models/UserFaceMapping.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MPS_5900_Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MPS_5900_Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/apiServices/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/UserService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/aws_example/aws_example.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/AwsService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/models.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +85,7 @@
     "Node.js.database.js.executor": "Debug",
     "Node.js.databaseSetUp.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Harry",
+    "git-widget-placeholder": "Harry 上的 #16",
     "javascript.nodejs.core.library.configured.version": "22.8.0",
     "javascript.nodejs.core.library.typings.version": "22.5.5",
     "last_opened_file_path": "C:/Users/hln12/Documents/Cornell/INFO5100",
@@ -159,7 +144,7 @@
       <workItem from="1728104003118" duration="619000" />
       <workItem from="1728148256954" duration="2884000" />
       <workItem from="1728396627205" duration="5062000" />
-      <workItem from="1728495556528" duration="2937000" />
+      <workItem from="1728495556528" duration="3975000" />
     </task>
     <task id="LOCAL-00001" summary="initialized node express">
       <option name="closed" value="true" />
@@ -225,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728069418320</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel.">
+      <option name="closed" value="true" />
+      <created>1728501783480</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1728501783480</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,6 +246,7 @@
     <MESSAGE value="Re-structured folders based on architecture" />
     <MESSAGE value="fixed explicit password log" />
     <MESSAGE value="added more comments and updated folder names." />
-    <option name="LAST_COMMIT_MESSAGE" value="added more comments and updated folder names." />
+    <MESSAGE value="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel." />
+    <option name="LAST_COMMIT_MESSAGE" value="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel." />
   </component>
 </project>
