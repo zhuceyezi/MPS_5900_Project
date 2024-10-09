@@ -4,20 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="613b5aef-9501-4924-8fa8-c3c9a07c5af8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/MPS_5900_Project.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/express/controllers/userController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/express/routers/userRouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/apiServices/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/userService.js" afterDir="false" />
+    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="added more comments and updated folder names.">
+      <change afterPath="$PROJECT_DIR$/express/models/UserFaceMapping.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MPS_5900_Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MPS_5900_Project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/apiServices/userService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/UserService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/express/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/config/databaseSetUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/config/databaseSetUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/models/Employee.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/Employee.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/aws_example/aws_example.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/AwsService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/controllers/userController.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/controllers/UserController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/models/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/models.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,58 +34,225 @@
       </list>
     </option>
   </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Yry01 &lt;103943433+yry01@users.noreply.github.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="backend" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;zhuceyezi&quot;
+  }
+}</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+        <option value="dev" />
+        <option value=".*end" />
+      </list>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zhuceyezi/MPS_5900_Project.git&quot;,
+    &quot;accountId&quot;: &quot;f2b5e31a-9776-406d-98bc-9ea6fc2e64d0&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;zhuceyezi&quot;,
+    &quot;repository&quot;: &quot;MPS_5900_Project&quot;
+  }
+}</component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2n0HHkn7dBpjzMhsQySw3TG6CLg" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2mFr9cZiyDCjRz3UmpeTWICH9D9" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;backend-api-controller-router-setUp&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Node.js.AwsService.js.executor": "Run",
+    "Node.js.bin\\www.executor": "Run",
+    "Node.js.database.js.executor": "Debug",
+    "Node.js.databaseSetUp.js.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Harry",
+    "javascript.nodejs.core.library.configured.version": "22.8.0",
+    "javascript.nodejs.core.library.typings.version": "22.5.5",
+    "last_opened_file_path": "C:/Users/hln12/Documents/Cornell/INFO5100",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\hln12\\Documents\\Cornell\\INFO5900\\MPS_5900_Project\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "preferences.sourceCode.JavaScript",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PyCharm 2024.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hln12\Documents\Cornell\INFO5900\MPS_5900_Project\express\aws_example" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hln12\Documents\Cornell\INFO5900\MPS_5900_Project" />
+      <recent name="C:\Users\hln12\Documents\Cornell\INFO5900\MPS_5900_Project\express\apiServices" />
+      <recent name="C:\Users\hln12\PycharmProjects\MPS_5900_Project\express" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
+        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
       </set>
     </attachedChunks>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="613b5aef-9501-4924-8fa8-c3c9a07c5af8" name="Changes" comment="" />
-      <created>1728102988211</created>
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="" />
+      <created>1726683014592</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1728102988211</updated>
-      <workItem from="1728102989783" duration="12000" />
-      <workItem from="1728103006899" duration="1180000" />
-      <workItem from="1728144159143" duration="192000" />
-      <workItem from="1728190290146" duration="7009000" />
+      <updated>1726683014592</updated>
+      <workItem from="1726683015612" duration="17000" />
+      <workItem from="1726683033873" duration="167000" />
+      <workItem from="1726683229594" duration="126000" />
+      <workItem from="1726690753091" duration="727000" />
+      <workItem from="1726847096698" duration="2026000" />
+      <workItem from="1727638237755" duration="4784000" />
+      <workItem from="1727646169498" duration="7219000" />
+      <workItem from="1727800207242" duration="2507000" />
+      <workItem from="1727802869020" duration="2552000" />
+      <workItem from="1727805434086" duration="1210000" />
+      <workItem from="1727806654096" duration="7986000" />
+      <workItem from="1727883920128" duration="1133000" />
+      <workItem from="1727908144595" duration="3154000" />
+      <workItem from="1728068700403" duration="778000" />
+      <workItem from="1728104003118" duration="619000" />
+      <workItem from="1728148256954" duration="2884000" />
+      <workItem from="1728396627205" duration="5062000" />
+      <workItem from="1728495556528" duration="2937000" />
     </task>
+    <task id="LOCAL-00001" summary="initialized node express">
+      <option name="closed" value="true" />
+      <created>1726683158418</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1726683158418</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add aws example">
+      <option name="closed" value="true" />
+      <created>1726847166672</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726847166672</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added todo">
+      <option name="closed" value="true" />
+      <created>1727639439645</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727639439645</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed some code formatting:">
+      <option name="closed" value="true" />
+      <created>1727807021617</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1727807021617</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fixed some code formatting: Changed data schema naming to be lower camel. Made database use underscore. Re-organized some code format. Added basic apis for database: delete, add, update.">
+      <option name="closed" value="true" />
+      <created>1727807102977</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1727807102977</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Re-structured folders based on architecture">
+      <option name="closed" value="true" />
+      <created>1727819437125</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1727819437125</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixed explicit password log">
+      <option name="closed" value="true" />
+      <created>1727819790521</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1727819790521</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added more comments and updated folder names.">
+      <option name="closed" value="true" />
+      <created>1728069418320</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1728069418320</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initialized node express" />
+    <MESSAGE value="add aws example" />
+    <MESSAGE value="Added TODO" />
+    <MESSAGE value="Merge pull request #8 from zhuceyezi/database-dev&#10;&#10;Database setup" />
+    <MESSAGE value="Added todo" />
+    <MESSAGE value="Fixed some code formatting:" />
+    <MESSAGE value="Fixed some code formatting: Changed data schema naming to be lower camel. Made database use underscore. Re-organized some code format. Added basic apis for database: delete, add, update." />
+    <MESSAGE value="Re-structured folders based on architecture" />
+    <MESSAGE value="fixed explicit password log" />
+    <MESSAGE value="added more comments and updated folder names." />
+    <option name="LAST_COMMIT_MESSAGE" value="added more comments and updated folder names." />
   </component>
 </project>

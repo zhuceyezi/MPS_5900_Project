@@ -6,10 +6,10 @@ const logger = require("morgan");
 
 const indexRouter = require("./apiServices");
 const usersRouter = require("./apiServices/users");
-const {database} = require("./models");
+const {database} = require("express/models/models");
 const userRouter = require("./routers/userRouter");
-const userServices = require("./apiServices/userService");
-const userController = require("./controllers/userController");
+const userServices = require("express/apiServices/UserService");
+const userController = require("express/controllers/UserController");
 const employeeModel = require("./models/Employee");
 
 const app = express();

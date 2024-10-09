@@ -6,35 +6,34 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="dbbaa687-2b65-4561-9175-3629ea45fb8e">
-      <console name="MYSQL RDS" type="STANDARD" schema="" session="Main" />
+    <connection id="35943d3f-23d3-48e2-a34e-f02bf522c842">
+      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[select * from `UFP_Employee_Info`.`employees`;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="dbbaa687-2b65-4561-9175-3629ea45fb8e" object-ref="schemas/UFP_Employee_Info/tables/employees" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="dbbaa687-2b65-4561-9175-3629ea45fb8e" />
+    <connection id="35943d3f-23d3-48e2-a34e-f02bf522c842" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="dbbaa687-2b65-4561-9175-3629ea45fb8e" dataset="UFP_Employee_Info.employees" active-filter-id="f4c31af5-6a50-4256-b66b-e62f2ffc503f">
-      <filter id="f4c31af5-6a50-4256-b66b-e62f2ffc503f" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND" />
-    </filter-actions>
+    <filter-actions connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" dataset="UFP_Employee_Info.employees" active-filter-id="EMPTY_FILTER" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -42,12 +41,12 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="dbbaa687-2b65-4561-9175-3629ea45fb8e" active="true" signed="true">
+      <connection id="35943d3f-23d3-48e2-a34e-f02bf522c842" active="true" signed="true">
         <database>
-          <name value="MYSQL RDS" />
-          <description value="" />
+          <name value="Connection" />
+          <description value="MPS 5900 AWS Mysql Database" />
           <database-type value="MYSQL" />
-          <config-type value="CUSTOM" />
+          <config-type value="BASIC" />
           <database-version value="8.0" />
           <driver-source value="BUNDLED" />
           <driver-library value="" />
@@ -103,7 +102,7 @@
           <tcp-host-address value="" />
           <tcp-port-from value="4000" />
           <tcp-port-to value="4999" />
-          <debugger-type value="ASK" />
+          <debugger-type value="JDBC" />
         </debugger>
         <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
           <object-filters />
@@ -233,7 +232,7 @@
     </dataset-grid-settings>
     <dataset-editor-settings>
       <text-editor-popup>
-        <active value="false" />
+        <active value="true" />
         <active-if-empty value="false" />
         <data-length-threshold value="100" />
         <popup-delay value="1000" />
@@ -264,20 +263,12 @@
           <content-type name="HTML" enabled="true" />
           <content-type name="XHTML" enabled="true" />
           <content-type name="CSS" enabled="true" />
-          <content-type name="Java" enabled="true" />
           <content-type name="SQL" enabled="true" />
           <content-type name="PL/SQL" enabled="true" />
-          <content-type name="JPA QL" enabled="true" />
           <content-type name="JavaScript" enabled="true" />
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
-          <content-type name="JSP" enabled="true" />
-          <content-type name="JSPx" enabled="true" />
-          <content-type name="Groovy" enabled="true" />
-          <content-type name="FTL" enabled="true" />
-          <content-type name="VTL" enabled="true" />
           <content-type name="YAML" enabled="true" />
-          <content-type name="Manifest" enabled="true" />
         </content-types>
       </qualified-text-editor>
       <record-navigation>
@@ -538,5 +529,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>
