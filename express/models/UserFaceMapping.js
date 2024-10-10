@@ -3,11 +3,11 @@ const {database} = require("../config/databaseSetUp");
 
 const UserFaceMapping = database.define('UserFaceMapping', {
     employeeId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         references: {
-            model: 'Employee',
-            key: 'id'
+            model: database.models.Employee.getTableName(),
+            key: 'employee_id'
         }
     },
     faceId: {
@@ -22,7 +22,7 @@ const UserFaceMapping = database.define('UserFaceMapping', {
     }
 }, {
                                             timestamps: false,
-                                            tableName: "UserFaceMapping",
+                                            // tableName: "employee_face_mapping",
                                             underscored: true
                                         });
 

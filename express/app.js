@@ -5,7 +5,6 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./apiServices");
-const usersRouter = require("./apiServices/users");
 const {database} = require("./models/models");
 const userRouter = require("./routers/userRouter");
 const userServices = require("./apiServices/UserService");
