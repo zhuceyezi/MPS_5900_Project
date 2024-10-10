@@ -8,7 +8,7 @@ dotenv.config({path: "../../.env"});
 
 class AwsService {
     constructor() {
-        this.collectionID = "my-face-collection"; // dummy collection. TODO: replace this.
+        this.collectionID = process.env.COLLECTION_ID;
         this.client = new RekognitionClient({
                                                 region: process.env.AWS_REGION,
                                                 credentials: {
