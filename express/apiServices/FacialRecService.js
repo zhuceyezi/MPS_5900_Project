@@ -31,18 +31,29 @@ class FacialRecService {
         }
     }
 
+    async deleteAllFaces(collectionId) {
+        try {
+            await this.awsService.deleteAllFaces(collectionId);
+            return true;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async recognizeEmployee(collectionId, imageBuffer) {
         try {
             const amazonImageId = await this.awsService.simpleSearchFacesByImage(collectionId, imageBuffer);
+            console.log(amazonImageId);
             if (amazonImageId === undefined) {
                 return null;
             }
             //search the user based on imageId
-            const employeeId = await this.UserFaceMapping.findOne({where: {imageId: amazonImageId}});
-            if (employeeId === null) {
+            const mapping = await this.UserFaceMapping.findOne({where: {imageId: amazonImageId}, raw: true});
+            console.log(mapping);
+            if (mapping === null) {
                 return null;
             }
-            return await this.userServices.getEmployeeById(employeeId);
+            return await this.userServices.getEmployeeById(mapping.employeeId);
         } catch (error) {
             console.error(error);
             return null;

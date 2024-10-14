@@ -23,6 +23,7 @@ module.exports = (UserService, employeeModel, AwsService, UserFaceMapping, Facia
 
     //POST /employees/validate
     router.post('/validate', upLoad.single('image'), (req, res) => facialRecController.validataDemployee(req, res));
+    router.delete('/all', (req, res) => facialRecController.deleteAllFaces(req, res));
 
     return router;
 }

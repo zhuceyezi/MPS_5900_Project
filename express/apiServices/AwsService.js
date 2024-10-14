@@ -26,7 +26,7 @@ class AwsService {
                                                 }
                                             });
     }
-    
+
     async #resizeImage(imageBytes, resizeQuality = 90) {
         let resizedImageBytes = imageBytes;
         while (resizedImageBytes.length > 5242880) { // 5MB in bytes
@@ -61,6 +61,17 @@ class AwsService {
             console.log(err);
             return false;
         }
+    }
+
+    async deleteAllFaces(collectionId) {
+        const faceIds = [];
+        const faceList = await this.listFaces(collectionId);
+        console.log(faceList);
+        for (const face of faceList.Faces) {
+            faceIds.push(face.FaceId);
+        }
+        console.log(faceIds);
+        return this.deleteFaces(collectionId, faceIds);
     }
 
     async searchFacesByImage(collectionId, imagePath, faceMatchThreshold = 99) {
@@ -171,11 +182,11 @@ class AwsService {
             };
             const command = new ListFacesCommand(params);
             const response = await this.client.send(command);
-            console.log(JSON.stringify(response, null, 2));
-            return true;
+            //console.log(JSON.stringify(response, null, 2));
+            return response;
         } catch (err) {
             console.log(err);
-            return false;
+            return null;
         }
     }
 

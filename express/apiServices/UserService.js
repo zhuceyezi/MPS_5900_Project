@@ -67,7 +67,7 @@ class UserService {
     }
 
     async getEmployeeById(employeeId) {
-        return await this.Employee.findOne({where: {employeeId: employeeId}});
+        return await this.Employee.findOne({where: {id: employeeId}});
     }
 
     //I think it should be deleteEmployeeById
