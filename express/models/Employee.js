@@ -28,7 +28,7 @@ const Employee = database.define("Employee", {
     },
     imageId: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     lastLogin: {
         type: DataTypes.DATE,
@@ -36,7 +36,7 @@ const Employee = database.define("Employee", {
         defaultValue: null
     }
     // This feild is used to store the employee id from company database system
-    
+
 }, {
                                      underscored: true,
                                      tableName: 'Employee'
