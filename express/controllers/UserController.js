@@ -1,6 +1,3 @@
-const http = require('node:http');
-
-
 class UserController {
     constructor(userServices) {
         this.userServices = userServices;

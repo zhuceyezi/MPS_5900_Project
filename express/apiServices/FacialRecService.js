@@ -1,4 +1,4 @@
-const {sequelize} = require('../models');
+const {database} = require('../models/models');
 
 
 class FacialRecService {
@@ -9,23 +9,26 @@ class FacialRecService {
     }
 
     async addEmployee({employeeId, employeeName, imageBuffer, collectionId}) {
-        const trans = await sequelize.transaction();
+        console.log(this.userServices);
+        const trans = await database.transaction();
         try {
-            const employeeResult = await this.userServices.addEmployee({employeeId, employeeName});
+            console.debug(employeeId, employeeName, imageBuffer, collectionId);
+            const employeeResult = await this.userServices.addEmployeeReturnUserId({employeeId, employeeName},
+                                                                                   {transaction: trans});
             const imageId = await this.awsService.simpleIndex(collectionId, imageBuffer);
-            if (imageId === undefined || !employeeResult) {
+            if (imageId === undefined || employeeResult === -1) {
                 console.log("Error in adding employee");
-                trans.rollback();
+                await trans.rollback();
                 return false;
             }
-            await this.UserFaceMapping.create({employeeId, imageId});
+            await this.UserFaceMapping.create({employeeId: employeeResult, imageId}, {transaction: trans});
+            await trans.commit();
             return true;
         } catch (error) {
             console.error(error);
-            trans.rollback();
+            await trans.rollback();
             return false;
         }
-
     }
 
     async recognizeEmployee(collectionId, imageBuffer) {
@@ -47,3 +50,6 @@ class FacialRecService {
 
     }
 }
+
+
+module.exports = FacialRecService

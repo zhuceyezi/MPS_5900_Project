@@ -1,15 +1,16 @@
-import {
-    DeleteFacesCommand,
-    DetectFacesCommand,
-    IndexFacesCommand,
-    ListCollectionsCommand,
-    ListFacesCommand,
-    RekognitionClient,
-    SearchFacesByImageCommand
-} from "@aws-sdk/client-rekognition";
-import dotenv from "dotenv";
-import fs from "fs";
-import sharp from "sharp";
+const {
+          DeleteFacesCommand,
+          DetectFacesCommand,
+          IndexFacesCommand,
+          ListCollectionsCommand,
+          ListFacesCommand,
+          RekognitionClient,
+          SearchFacesByImageCommand
+      } = require('@aws-sdk/client-rekognition');
+
+const dotenv = require("dotenv");
+const fs = require("fs");
+const sharp = require("sharp");
 
 dotenv.config({path: "../../.env"});
 
@@ -25,7 +26,7 @@ class AwsService {
                                                 }
                                             });
     }
-
+    
     async #resizeImage(imageBytes, resizeQuality = 90) {
         let resizedImageBytes = imageBytes;
         while (resizedImageBytes.length > 5242880) { // 5MB in bytes
@@ -196,7 +197,7 @@ class AwsService {
 }
 
 
-export default AwsService;
+module.exports = AwsService;
 
 const aws = new AwsService();
 aws.listFaces(aws.collectionID).then(console.log("done"));

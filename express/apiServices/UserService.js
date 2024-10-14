@@ -14,7 +14,7 @@ class UserService {
      * @param employeeName
      * @returns {Promise<boolean>}
      */
-    async addEmployee({employeeId, employeeName}) {
+    async addEmployee({employeeId, employeeName}, options = {}) {
         try {
             console.debug(
                 `Adding Employee: ${JSON.stringify(
@@ -32,11 +32,37 @@ class UserService {
                 lastLogin: new Date(),
                 employeeId: employeeId
             };
-            await this.Employee.create(values);
+            await this.Employee.create(values, options);
             return true;
         } catch (error) {
             console.error(error);
             return false;
+        }
+    }
+
+    async addEmployeeReturnUserId({employeeId, employeeName}, options = {}) {
+        try {
+            console.debug(
+                `Adding Employee: ${JSON.stringify(
+                    /** @type Employee*/
+                    {
+                        employeeId,
+                        employeeName
+                    },
+                    null,
+                    2
+                )}`
+            );
+            const values = {
+                employeeName: employeeName,
+                lastLogin: new Date(),
+                employeeId: employeeId
+            };
+            const employee = await this.Employee.create(values, options);
+            return employee.id;
+        } catch (error) {
+            console.error(error);
+            return -1;
         }
     }
 
