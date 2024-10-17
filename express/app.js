@@ -3,14 +3,18 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-
 const indexRouter = require("./apiServices");
-const usersRouter = require("./apiServices/users");
 const {database} = require("./models/models");
 const userRouter = require("./routers/userRouter");
 const userServices = require("./apiServices/UserService");
 const userController = require("./controllers/UserController");
 const employeeModel = require("./models/Employee");
+const upLoad = require("./config/multerSetUp");
+const facialRecService = require("./apiServices/FacialRecService");
+const facialRecController = require("./controllers/FacialRecController");
+const UserFaceMapping = require("./models/UserFaceMapping");
+const awsService = require("./apiServices/AwsService");
+const facialRecRouter = require("./routers/FacialRecRouter");
 
 const app = express();
 
@@ -42,8 +46,14 @@ database
 app.use("/", indexRouter);
 app.use("/employees", userRouter(userController, userServices, employeeModel));
 
-// const PORT = 3000;
-// app.listen(PORT, () => {
-//     console.log(`server is running on port ${PORT}`);
-// });
+const collectionId = process.env.COLLECTION_ID;
+app.use("/facial",
+        facialRecRouter(userServices, employeeModel, awsService, UserFaceMapping, facialRecService, facialRecController,
+                        upLoad,
+                        collectionId));
+
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`);
+});
 module.exports = app;
