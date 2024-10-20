@@ -20,7 +20,7 @@
       <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[select * from `UFP_Employee_Info`.`employees`;]]></console>
     </connection>
     <connection id="4fd7483d-11a0-4548-a02f-34888b23c46b">
-      <console name="Connection 1" type="STANDARD" schema="" session="Main" />
+      <console name="INFO5556" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
