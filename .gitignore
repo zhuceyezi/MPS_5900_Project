@@ -1,3 +1,7 @@
 /express/node_modules/
 .env              
 node_modules/
+.idea/
+.idea/workspace.xml
+.idea/aws.xml
+/.idea

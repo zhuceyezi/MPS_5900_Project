@@ -18,7 +18,8 @@ const UserFaceMapping = database.define('UserFaceMapping', {
     },
     imageId: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 }, {
                                             timestamps: false,

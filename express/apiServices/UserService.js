@@ -3,46 +3,73 @@ const {Op} = require("sequelize");
 
 
 class UserService {
-    
+
     constructor(EmployeeModel) {
         this.Employee = EmployeeModel
     }
-    
+
     /**
      *
      * @param employeeId
      * @param employeeName
-     * @param imageId
      * @returns {Promise<boolean>}
      */
-    async addEmployee({employeeId, employeeName, imageId}) {
+    async addEmployee({employeeId, employeeName}, options = {}) {
         try {
             console.debug(
                 `Adding Employee: ${JSON.stringify(
                     /** @type Employee*/
                     {
                         employeeId,
-                        employeeName,
-                        imageId
+                        employeeName
                     },
                     null,
                     2
                 )}`
             );
             const values = {
-                imageId: imageId,
                 employeeName: employeeName,
                 lastLogin: new Date(),
                 employeeId: employeeId
             };
-            await this.Employee.create(values);
+            await this.Employee.create(values, options);
             return true;
         } catch (error) {
             console.error(error);
             return false;
         }
     }
-    
+
+    async addEmployeeReturnUserId({employeeId, employeeName}, options = {}) {
+        try {
+            console.debug(
+                `Adding Employee: ${JSON.stringify(
+                    /** @type Employee*/
+                    {
+                        employeeId,
+                        employeeName
+                    },
+                    null,
+                    2
+                )}`
+            );
+            const values = {
+                employeeName: employeeName,
+                lastLogin: new Date(),
+                employeeId: employeeId
+            };
+            const employee = await this.Employee.create(values, options);
+            return employee.id;
+        } catch (error) {
+            console.error(error);
+            return -1;
+        }
+    }
+
+    async getEmployeeById(employeeId) {
+        return await this.Employee.findOne({where: {id: employeeId}});
+    }
+
     //I think it should be deleteEmployeeById
     /**
      *
@@ -64,21 +91,19 @@ class UserService {
             return false;
         }
     }
-    
+
     /**
      *
      * @param employeeId
      * @param lastLogin
      * @param employeeName
-     * @param imageId
      * @param id
      * @returns {Promise<boolean>}
      */
     async updateEmployee({
                              employeeId,
                              lastLogin,
-                             employeeName,
-                             imageId
+                             employeeName
                          } = {}) {
         try {
             console.debug(
@@ -86,8 +111,7 @@ class UserService {
                     {
                         employeeId,
                         lastLogin,
-                        employeeName,
-                        imageId
+                        employeeName
                     },
                     null,
                     2
@@ -98,7 +122,6 @@ class UserService {
             }
             const resultArray = await this.Employee.update(
                 {
-                    imageId: imageId,
                     lastLogin: lastLogin,
                     employeeName: employeeName,
                     employeeId: employeeId
@@ -116,8 +139,8 @@ class UserService {
             return false;
         }
     }
-    
-    
+
+
 }
 
 

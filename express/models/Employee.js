@@ -1,15 +1,17 @@
 const {database} = require("../config/databaseSetUp");
 const {DataTypes} = require("sequelize");
 
-/**
- * @typedef {Object} EmployeeAttributes
- * @property {string|undefined} id
- * @property {string} employeeName
- * @property {string|undefined} employeeId
- * @property {Date} [lastLogin|undefined]
- */
+
 const Employee = database.define("Employee", {
     // Model attributes are defined here
+    /**
+     * @typedef {Object} EmployeeAttributes
+     * @property {string|undefined} id
+     * @property {string} imageId
+     * @property {string} employeeName
+     * @property {string|undefined} employeeId
+     * @property {Date} [lastLogin|undefined]
+     */
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -18,12 +20,15 @@ const Employee = database.define("Employee", {
     },
     employeeId: {
         type: DataTypes.STRING,
-        allowNull: true,
-        unique: true
+        allowNull: true
     },
     employeeName: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    imageId: {
+        type: DataTypes.STRING,
+        allowNull: true
     },
     lastLogin: {
         type: DataTypes.DATE,
@@ -31,10 +36,10 @@ const Employee = database.define("Employee", {
         defaultValue: null
     }
     // This feild is used to store the employee id from company database system
-    
+
 }, {
-                                     underscored: true
-                                     // tableName: 'employee'
+                                     underscored: true,
+                                     tableName: 'Employee'
                                  });
 
 module.exports = Employee;

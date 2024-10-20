@@ -1,7 +1,16 @@
-import {DeleteFacesCommand, DetectFacesCommand, IndexFacesCommand, ListCollectionsCommand, ListFacesCommand, RekognitionClient, SearchFacesByImageCommand} from "@aws-sdk/client-rekognition";
-import dotenv from "dotenv";
-import fs from "fs";
-import sharp from "sharp";
+const {
+          DeleteFacesCommand,
+          DetectFacesCommand,
+          IndexFacesCommand,
+          ListCollectionsCommand,
+          ListFacesCommand,
+          RekognitionClient,
+          SearchFacesByImageCommand
+      } = require('@aws-sdk/client-rekognition');
+
+const dotenv = require("dotenv");
+const fs = require("fs");
+const sharp = require("sharp");
 
 dotenv.config({path: "../../.env"});
 
@@ -17,7 +26,7 @@ class AwsService {
                                                 }
                                             });
     }
-    
+
     async #resizeImage(imageBytes, resizeQuality = 90) {
         let resizedImageBytes = imageBytes;
         while (resizedImageBytes.length > 5242880) { // 5MB in bytes
@@ -27,14 +36,14 @@ class AwsService {
         }
         return resizedImageBytes;
     }
-    
+
     async listCollections() {
         const params = {};
         const command = new ListCollectionsCommand(params);
         const response = await this.client.send(command);
         return response['CollectionIds'];
     }
-    
+
     async detectFaces(imagePath) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -53,7 +62,18 @@ class AwsService {
             return false;
         }
     }
-    
+
+    async deleteAllFaces(collectionId) {
+        const faceIds = [];
+        const faceList = await this.listFaces(collectionId);
+        console.log(faceList);
+        for (const face of faceList.Faces) {
+            faceIds.push(face.FaceId);
+        }
+        console.log(faceIds);
+        return this.deleteFaces(collectionId, faceIds);
+    }
+
     async searchFacesByImage(collectionId, imagePath, faceMatchThreshold = 99) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -74,7 +94,32 @@ class AwsService {
             console.log(err);
         }
     }
-    
+
+    async simpleSearchFacesByImage(collectionId, imageBuffer, faceMatchThreshold = 99) {
+        try {
+            const imageBytesBuffer = await this.#resizeImage(imageBuffer);
+            const params = {
+                CollectionId: collectionId,
+                FaceMatchThreshold: faceMatchThreshold,
+                Image: {
+                    Bytes: imageBytesBuffer
+                },
+                MaxFaces: 1,
+                QualityFilter: null
+            };
+            const command = new SearchFacesByImageCommand(params);
+            const response = await this.client.send(command);
+            console.log(JSON.stringify(response, null, 2));
+            if (response.FaceMatches && response.FaceMatches.length > 0 && response.FaceMatches[0].Face) {
+                return response.FaceMatches[0].Face.FaceId;
+            }
+            return undefined;
+        } catch (err) {
+            console.log(err);
+            return undefined;
+        }
+    }
+
     async indexFaces(collectionId, imagePath, imageName = undefined) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -103,7 +148,32 @@ class AwsService {
             return false;
         }
     }
-    
+
+    async simpleIndex(collectionId, imageBuffer) {
+        try {
+            const imageBytesBuffer = await this.#resizeImage(imageBuffer);
+            const params = {
+                CollectionId: collectionId,
+                DetectionAttributes: ["ALL"],
+                Image: {
+                    Bytes: imageBytesBuffer
+                },
+                MaxFaces: 1,
+                QualityFilter: null
+            };
+            const command = new IndexFacesCommand(params);
+            const response = await this.client.send(command);
+            if (response.FaceRecords && response.FaceRecords.length > 0 && response.FaceRecords[0].Face) {
+                return response.FaceRecords[0].Face.FaceId;
+            }
+            console.log(JSON.stringify(response));
+            return undefined;
+        } catch (err) {
+            console.log(err);
+            return undefined;
+        }
+    }
+
     async listFaces(collectionId, faceIds = []) {
         try {
             const params = {
@@ -112,14 +182,14 @@ class AwsService {
             };
             const command = new ListFacesCommand(params);
             const response = await this.client.send(command);
-            console.log(JSON.stringify(response, null, 2));
-            return true;
+            //console.log(JSON.stringify(response, null, 2));
+            return response;
         } catch (err) {
             console.log(err);
-            return false;
+            return null;
         }
     }
-    
+
     async deleteFaces(collectionId, faceIds) {
         try {
             const params = {
@@ -138,7 +208,7 @@ class AwsService {
 }
 
 
-export default AwsService;
+module.exports = AwsService;
 
 const aws = new AwsService();
 aws.listFaces(aws.collectionID).then(console.log("done"));
