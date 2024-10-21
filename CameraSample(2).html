@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Example</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+   
+    <div id="camera-container">
+        <h1>UFP Employee Checkin</h1>
+        <img id= "logo" src="/MPS_5900_Project/asset/UFPT_Logo_RGB_transparent.png" alt="UFP Technologies Logo">
+
+        <div id="instructions">
+            <p>Remove any accessories covering your face.</p>
+            <p>Align your face within the frame</p>
+            <p>Press the "Take Photo" when you are ready</p>
+        </div>
+ 
+        <!-- Live camera view -->
+        <video id="video" autoplay></video>
+ 
+        <!-- Button to snap a picture -->
+        <button id="capture">Take Photo</button>
+ 
+        <!-- Display captured image -->
+        <!--<img id="photo" alt="Captured Photo" />-->
+
+        <!-- Button to upload the image -->
+        <!--<button id="upload">Upload Photo</button> -->
+
+        <!-- Button to sign in or sign up -->
+        <div>
+            <button id="signin/up">Account Login</button>
+            <button id="signin/up">Sign Up</button>
+        </div>
+        <!-- Button to help request -->
+        <button id="help">Help</button>
+
+    </div>
+ 
+    <script>
+        const video = document.getElementById('video');
+        const photo = document.getElementById('photo');
+        const captureButton = document.getElementById('capture');
+        //const uploadButton = document.getElementById('upload');
+        const canvas = document.createElement('canvas'); // Create a canvas dynamically
+ 
+        // Access the user's camera and stream it to the video element
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error("Error accessing camera: " + err);
+            });
+
+        // Capture the photo from the live camera feed
+        captureButton.addEventListener('click', () => {
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+            // Convert canvas to image and display in the img element
+            const dataURL = canvas.toDataURL('image/png');
+            photo.src = dataURL;
+
+            // Upload image
+            const base64Image = photo.src;
+            if (base64Image) {
+                sendImageToAPI(base64Image);
+            } else {
+                console.log('No image to upload');
+            }
+            
+        });
+        
+        // Upload button event listener
+        /*uploadButton.addEventListener('click', () => {
+            const base64Image = photo.src;
+            if (base64Image) {
+                sendImageToAPI(base64Image);
+            } else {
+                console.log('No image to upload');
+            }
+        });*/
+        
+        // Function to send the image data to the API
+        async function sendImageToAPI(base64Image) {
+            try {
+                // TODO: change backend API
+                upload_endpoint = 'https://httpbin.org/post'
+                const response = await fetch(upload_endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ image: base64Image })
+                });
+                const result = await response.json();
+                console.log('Image uploaded successfully:', result);
+            } catch (error) {
+                console.error('Error uploading image:', error);
+            }
+        }
+    </script>
+</body>
+</html>
