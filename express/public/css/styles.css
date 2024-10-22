@@ -20,6 +20,8 @@ main {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 #camera-container {
@@ -41,11 +43,145 @@ img {
     border: 2px solid black;
 }
 
+/* buttons */
 button {
+    margin-top: 10px;
     background-color: #0056b3;
     color: white;
     padding: 10px 20px;
+    border-radius: 5px;
     border: none;
     cursor: pointer;
     margin: 5px;
+}
+
+.back-button {
+    margin-top: 30px;
+    background: none;
+    border: 2px solid #2c4b8e;
+    color: #2c4b8e;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+.back-button:hover {
+    background-color: #2c4b8e;
+    color: #fff;
+}
+
+.help-button {
+    position: fixed;
+    align-items: center;
+    bottom: 20px;
+    right: 20px;
+    background: none;
+    border: 2px solid #2c4b8e;
+    color: #2c4b8e;
+    padding: 5px 10px;
+    border-radius: 10%;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    text-decoration: none;
+}
+.help-button:hover {
+    background-color: #2c4b8e;
+    color: #fff;
+}
+
+
+.container {
+    background-color: #d3d3d3;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+.container h2 {
+    margin-bottom: 20px;
+}
+.login-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.login-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.login-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.report-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.report-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.report-group input, .report-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.textarea-wrapper {
+    position: relative;
+}
+
+.textarea-wrapper textarea {
+    resize: none;
+    height: 110px;
+    padding-right: 40px;
+}
+
+.submit-button {
+    background-color: #2c4b8e;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.submit-button:hover {
+    background-color: #1f3665;
+}
+
+.character-count {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 12px;
+    color: #666;
+    background: rgba(255, 255, 255, 0.7); /* Background to make it readable */
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.popup {
+    background-color: #d3d3d3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
 }
