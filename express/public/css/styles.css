@@ -34,7 +34,7 @@ video {
     border: 2px solid black;
 }
 
-img {
+#logo{
     margin-top: 20px;
     width: 300px;
     height: 225px;
@@ -49,3 +49,20 @@ button {
     cursor: pointer;
     margin: 5px;
 }
+
+
+.user-image {
+    max-width: 100%; /* 确保图片适应宽度 */
+    height: auto;
+}
+
+.information-inline-container {
+    display: inline-block;
+    align-items: center; /* 使容器内的内容在同一行显示 */
+    margin: 5px 0;
+}
+.textspace {
+    display: inline; /* 使 user-name 在同一行 */
+    margin-left: 5px; /* 添加一些左侧间距 */
+}
+
