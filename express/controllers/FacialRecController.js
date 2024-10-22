@@ -27,7 +27,7 @@ class FacialRecController {
         }
     }
 
-    async validataDemployee(req, res) {
+    async validateEmployee(req, res) {
         try {
             const collectionId = this.collectionId;
             const imageBuffer = req.file.buffer;
