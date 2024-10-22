@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Page</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+
+<body>
+    <header class="header">
+        <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo">
+    </header>
+    <main>
+        <div class="container">
+            <form id="feedbackForm">
+                <div class="report-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter your name">
+                </div>
+                <div class="report-group">
+                    <label for="id">ID</label>
+                    <input type="text" id="id" placeholder="Enter your ID">
+                </div>
+                <div class="report-group">
+                    <label for="problem">Problem</label>
+                    <div class="textarea-wrapper">
+                        <textarea id="problem" placeholder="Describe your problem here..." maxlength="420"></textarea>
+                        <div class="character-count" id="charCount">0/420</div>
+                    </div>
+                </div>
+                <button class="submit-button">Submit</button>  
+            </form>
+            <div class="popup" id="successPopup" style="display: none;">
+                <p>Your feedback has been collected!<br>Thank you!<br>(<span id="countdown">3</span>s...)</p>
+            </div>
+        </div>
+
+        <script src="js/Help Page.js"></script>
+    </main>
+    </main>
+</body>
+
+</html>
