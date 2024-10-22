@@ -98,23 +98,15 @@ button {
     padding: 5px 10px;
     border-radius: 10%;
     cursor: pointer;
-    font-size: 20px; /* 字体大小 */
+    font-size: 20px;
     transition: background-color 0.3s, color 0.3s;
     text-align: center;
     text-decoration: none;
-    display: flex; /* 使用 flexbox 来对齐图标和文本 */
-    gap: 5px; /* 添加图标和文本之间的间距 */
 }
 
 .help-button:hover {
     background-color: #2c4b8e;
     color: #fff;
-}
-
-.buttonicon {
-    width: 20px;  /* 设置图标宽度 */
-    height: 20px; /* 设置图标高度 */
-    vertical-align: middle; /* 确保图标与文本垂直对齐 */
 }
 
 .container {

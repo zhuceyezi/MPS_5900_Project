@@ -31,4 +31,3 @@ window.onload = function() {
     startCountdown(countdownDuration); // 启动倒计时
 };
 
-
