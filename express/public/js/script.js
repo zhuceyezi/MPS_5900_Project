@@ -26,6 +26,9 @@ function startCountdown(duration) {
     }, 1000);
 }
 
+
 window.onload = function() {
     startCountdown(countdownDuration); // 启动倒计时
 };
+}, 1000); 
+
