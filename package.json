@@ -9,7 +9,7 @@
     "sharp": "^0.33.5"
   },
   "scripts": {
-    "start": "node express/app.js",
-    "dev": "nodemon express/app.js"
+    "start": "node .\\express\\bin\\www",
+    "dev": "nodemon .\\express\\bin\\www"
   }
 }
