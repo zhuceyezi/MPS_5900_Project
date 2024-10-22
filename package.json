@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-rekognition": "^3.670.0",
+    "dotenv": "^16.4.5",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.3",
+    "nodeman": "^1.1.2",
+    "sequelize": "^6.37.4",
+    "sharp": "^0.33.5"
+  },
+  "scripts": {
+    "start": "node .\\express\\bin\\www",
+    "dev": "nodemon .\\express\\bin\\www"
+  }
+}
