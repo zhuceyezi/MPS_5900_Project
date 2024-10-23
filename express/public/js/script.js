@@ -94,7 +94,7 @@ async function sendImageToAPI(imageBlob) {
             //store info for next page
             sessionStorage.setItem('employeeData', JSON.stringify(employeeData));
             // Redirect to the employee info page
-            // window.location.href = "2.Loading Page.html";
+            window.location.href = "3.Success Page.html";
            
 
         }else {
