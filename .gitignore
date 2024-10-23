@@ -5,3 +5,5 @@ node_modules/
 .idea/workspace.xml
 .idea/aws.xml
 /.idea
+package-lock.json
+package.json

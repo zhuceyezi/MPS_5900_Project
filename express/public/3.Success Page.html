@@ -10,7 +10,7 @@
 
 </head>
 
-<body data-next-page="1.Main Page.html" data-countdown-duration="15">
+<body data-next-page="index.html" data-countdown-duration="15">
     <!-- Logo -->
     <header class="header">
         <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo">
@@ -34,16 +34,29 @@
 
     
         <div>
-            <p class = "information-inline-container">Name:</p>
-            <p id="user-name" class="textspace" class ="information-inline-container">user name</p>
+            <p class = "information-inline-container">id</p>
+            <p id="user-name" class="textspace" class ="information-inline-container"></p>
         </br>
             <p class = "information-inline-container">ID:</p>
             <p id="user-id" class = "information-inline-container" class="textspace"> 123456</p>
         </div>
 
+<!--Display employee information-->
+        <div>
+            <p class = "information-inline-container">employeeId</p>
+            <div id="employeeId" class="textspace" class ="information-inline-container"></div>
+        </br>
+        <p class = "information-inline-container">employeeName</p>
+        <div id="employeeName" class="textspace" class ="information-inline-container"></div>
+        </br>
+        <p class = "information-inline-container">lastLogin</p>
+        <div id="lastLogin" class="textspace" class ="information-inline-container"></div>
+
+        </div>
+
         
         <!-- Buttons -->
-        <a href="1.Main Page.html">
+        <a href="index.html">
             <button id="confirminfor">Confirm 
                 (<span id="countdown">5</span>s)
             </button>
@@ -62,6 +75,18 @@
     
     <script src="js/coundown.js" defer></script>
     </main>
+
+    <script>
+        // Get the employee data from the previous page
+        window.onload = function() {
+            const employeeData = JSON.parse(sessionStorage.getItem('employeeData'));
+            if (employeeData) {
+                document.getElementById('employeeId').textContent = employeeData.employeeId;
+                document.getElementById('employeeName').textContent = employeeData.employeeName;
+                document.getElementById('lastLogin').textContent = new Date(employeeData.lastLogin).toLocaleString();
+            }
+        };
+    </script>
 </body>
 
 </html>
