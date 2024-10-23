@@ -29,6 +29,18 @@ function startCountdown(duration) {
 
 window.onload = function() {
     startCountdown(countdownDuration); // 启动倒计时
+    // console.log("YRY");
+    //     // Get the employee data from the previous page
+    //         console.log("YRY");
+            const rawEmployeeData = sessionStorage.getItem('employeeData');
+            console.log(rawEmployeeData);
+            const employeeData = JSON.parse(sessionStorage.getItem('employeeData'));
+            console.log(employeeData);
+            if (employeeData) {
+                
+                document.getElementById('employeeId').textContent = employeeData.employeeId;
+                document.getElementById('employeeName').textContent = employeeData.employeeName;
+                document.getElementById('lastLogin').textContent = new Date(employeeData.lastLogin).toLocaleString();
+            }
 };
-
 

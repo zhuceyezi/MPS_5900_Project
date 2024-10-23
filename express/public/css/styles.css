@@ -88,8 +88,9 @@ button {
 }
 
 .help-button {
+    display: flex; /* 使用 Flexbox 使内容在同一行 */
+    align-items: center; /* 垂直居中对齐 */
     position: fixed;
-    align-items: center;
     bottom: 20px;
     right: 20px;
     background: none;
@@ -98,12 +99,10 @@ button {
     padding: 5px 10px;
     border-radius: 10%;
     cursor: pointer;
-    font-size: 20px; /* 字体大小 */
+    font-size: 20px;
     transition: background-color 0.3s, color 0.3s;
     text-align: center;
     text-decoration: none;
-    display: flex; /* 使用 flexbox 来对齐图标和文本 */
-    gap: 5px; /* 添加图标和文本之间的间距 */
 }
 
 .help-button:hover {
@@ -112,11 +111,10 @@ button {
 }
 
 .buttonicon {
-    width: 20px;  /* 设置图标宽度 */
-    height: 20px; /* 设置图标高度 */
-    vertical-align: middle; /* 确保图标与文本垂直对齐 */
+    width: 20px; /* 设置更小的宽度 */
+    height: auto; /* 高度自动调整，保持宽高比 */
+    margin-right: 5px; /* 添加右侧间距，使图标与文本有距离 */
 }
-
 .container {
     background-color: #d3d3d3;
     padding: 40px;

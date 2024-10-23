@@ -1,0 +1,9 @@
+- [ ] Document DB models
+- [ ] Explore AWS Collections:
+  - [ ] Constant FaceId for the same person?
+    - [ ] Yes
+    - [ ] No
+- [ ] Get user data from a predefined static image.
+  - [ ] Return a json
+- [ ] How do we manage photos in a collection?
+  - Answer: TODO
