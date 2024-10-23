@@ -1,20 +1,55 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+require("dotenv").config({path: "../.env"});
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const indexRouter = require("./apiServices");
+const {database} = require("./models/models");
+const userRouter = require("./routers/userRouter");
+const userServices = require("./apiServices/UserService");
+const userController = require("./controllers/UserController");
+const employeeModel = require("./models/Employee");
+const upLoad = require("./config/multerSetUp");
+const facialRecService = require("./apiServices/FacialRecService");
+const facialRecController = require("./controllers/FacialRecController");
+const UserFaceMapping = require("./models/UserFaceMapping");
+const awsService = require("./apiServices/AwsService");
+const facialRecRouter = require("./routers/FacialRecRouter");
 
-var indexRouter = require('./routes');
-var usersRouter = require('./routes/users');
+const app = express();
 
-var app = express();
-
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+database
+    .authenticate()
+    .then(() => {
+        database
+            .sync()
+            .then(() => {
+                console.log("successful connect to database and sync the schemas");
+            })
+            .catch((err) => {
+                console.log("error during the sync the model process");
+                console.log(err);
+            });
+    })
+    .catch((err) => {
+        console.log("error when connecting to database");
+        console.log(err);
+    });
+
+
+app.use("/", indexRouter);
+app.use("/employees", userRouter(userController, userServices, employeeModel));
+
+const collectionId = process.env.COLLECTION_ID;
+app.use("/facial",
+        facialRecRouter(userServices, employeeModel, awsService, UserFaceMapping, facialRecService, facialRecController,
+                        upLoad,
+                        collectionId));
 
 module.exports = app;

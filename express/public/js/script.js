@@ -1,34 +1,109 @@
+const video = document.getElementById("video");
+const photo = document.getElementById("photo");
+const captureButton = document.getElementById("capture");
+const employeeInfoDiv = document.getElementById("employee-info");
+//const uploadButton = document.getElementById('upload');
+const canvas = document.createElement("canvas"); // Create a canvas dynamically
 
-//let countdownDuration = 5;
+// Access the user's camera and stream it to the video element
+navigator.mediaDevices
+    .getUserMedia({ video: true })
+    .then((stream) => {
+        video.srcObject = stream;
+    })
+    .catch((err) => {
+        console.error("Error accessing camera: " + err);
+    });
 
-const countdownElement = document.getElementById('countdown');
-const nextPage = document.body.dataset.nextPage;
+// Capture the photo from the live camera feed
+captureButton.addEventListener("click", () => {
+    const context = canvas.getContext("2d");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-const countdownDuration = parseInt(document.body.dataset.countdownDuration) || 20; // 如果没有提供，则默认为 20 秒
 
-function startCountdown(duration) {
-    let timeLeft = duration;
+    // convert canvas to blob
+    canvas.toBlob(async(blob) =>{
+        try{
+            await sendImageToAPI(blob);
+            } catch(error) {
+                console.error("error image:", error);
+            }
+            }, `image/jpeg`, 0.95);
 
-    // Update the countdown display
-    countdownElement.textContent = timeLeft;
+    });
 
-    const timer = setInterval(() => {
-        timeLeft--;
-        countdownElement.textContent = timeLeft;
+    // Convert canvas to image and display in the img element
+    // const dataURL = canvas.toDataURL("image/png");
+    // photo.src = dataURL;
 
-        // If the countdown ends, stop the timer
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            countdownElement.textContent = '0';
-            window.location.href = nextPage; // Jump to another page when the countdown is over.
+    // Upload image
+//     const base64Image = photo.src;
+//     if (base64Image) {
+//         sendImageToAPI(base64Image);
+//     } else {
+//         console.log("No image to upload");
+//     }
+// });
+
+
+
+// Upload button event listener
+/*uploadButton.addEventListener('click', () => {
+                const base64Image = photo.src;
+                if (base64Image) {
+                    sendImageToAPI(base64Image);
+                } else {
+                    console.log('No image to upload');
+                }
+            });*/
+
+// Function to send the image data to the API
+async function sendImageToAPI(imageBlob) {
+    try {
+        //create FormData and append the image
+        const formData = new FormData();
+        formData.append("image", imageBlob, "photo.jpg");  
+             
+        
+        upload_endpoint = "http://localhost:3000/facial/validate";
+        const response = await fetch(upload_endpoint, {
+            method: "POST",
+            body: formData,
+            // headers: {
+            //     "Content-Type": "application/json",
+            // },
+            // body: JSON.stringify({ image: base64Image }),
+        });
+
+        if (response.status ===200){
+
+            const employeeData = await response.json();
+            //Test in console
+            console.log(employeeData);
+            console.log("✅ Facial recognition successful!");
+            console.log("Employee Information:");
+            console.log("------------------------");
+            console.log("ID:", employeeData.employeeId);
+            console.log("Name:", employeeData.employeeName);
+            console.log("Last Login:", new Date(employeeData.lastLogin).toLocaleString());
+            console.log("------------------------");
+
+
+            //store info for next page
+            sessionStorage.setItem('employeeData', JSON.stringify(employeeData));
+            // Redirect to the employee info page
+            window.location.href = "3.Success Page.html";
+           
+
+        }else {
+            console.error("Facial recognition failed:", response.statusText);
         }
-
-    }, 1000);
+        // const result = await response.json();
+        // console.log("Image uploaded successfully:", result);
+    } catch (error) {
+        console.error("Error during facial recognition:", error.message);
+    }
 }
-
-
-window.onload = function() {
-    startCountdown(countdownDuration); // 启动倒计时
-};
-}, 1000); 
 
