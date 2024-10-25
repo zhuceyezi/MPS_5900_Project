@@ -28,12 +28,25 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
 video {
-    width: 300px;
-    height: 225px;
+    width: 500px;
+    height: auto;
     border: 2px solid black;
+    border-radius: 8px;
+    margin-bottom: 20px
+}
+
+#canvas, #capturedPhoto {
+    width: 495px; /* Set the captured photo size to match video */
+    height: auto; /* Maintain aspect ratio */
+    border: 5px solid #0056b3;
+    border-radius: 8px;
+    object-fit: cover; /* Cover the area without distorting */
+    display: none; /* Initially hidden, will be shown when photo is taken */
+    margin-bottom: 20px
 }
 
 #logo{
@@ -53,6 +66,28 @@ button {
     border: none;
     cursor: pointer;
     margin: 5px;
+}
+
+#capture, #retake {
+    position: absolute; /* Position both buttons absolutely */
+    left: 40%;          /* Center horizontally */
+}
+
+#submit{
+    background-color: gray;
+    position: absolute; /* Position both buttons absolutely */
+    left: 55%;  
+}
+
+#submit.active {
+    background-color: #0056b3; /* 激活后为蓝色 */
+    cursor: pointer; /* 激活状态允许点击 */
+}
+
+
+#retake{
+    background-color: #82bcfa;
+    color: black;
 }
 
 
@@ -120,8 +155,9 @@ button {
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 500px;
     text-align: center;
+    
 }
 .container h2 {
     margin-bottom: 20px;
