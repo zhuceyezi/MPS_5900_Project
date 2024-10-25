@@ -64,8 +64,14 @@ async function sendImageToAPI(imageBlob) {
     try {
         //create FormData and append the image
         const formData = new FormData();
+
+        // use local image instead of captured image for quicker testing
+        const localImagePath = 'test_photo.jpg';
+        const res = await fetch(localImagePath);
+        imageBlob = await res.blob();
+
+
         formData.append("image", imageBlob, "photo.jpg");  
-             
         
         upload_endpoint = "http://localhost:3000/facial/validate";
         const response = await fetch(upload_endpoint, {
@@ -94,7 +100,7 @@ async function sendImageToAPI(imageBlob) {
             //store info for next page
             sessionStorage.setItem('employeeData', JSON.stringify(employeeData));
             // Redirect to the employee info page
-            window.location.href = "3.Success Page.html";
+            window.location.href = "success.html";
            
 
         }else {
