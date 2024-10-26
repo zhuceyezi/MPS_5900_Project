@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel.">
+    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="fixed static image">
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/models/Employee.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/Employee.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/apiServices/AwsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/AwsService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/apiServices/FacialRecService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/FacialRecService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/apiServices/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/UserService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/express/models/UserFaceMapping.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/UserFaceMapping.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +35,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="backend" />
+        <entry key="$PROJECT_DIR$" value="dev-fixed_static_image" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -89,7 +91,7 @@
     &quot;Node.js.database.js.executor&quot;: &quot;Debug&quot;,
     &quot;Node.js.databaseSetUp.js.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Harry 上的 #16&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev-refractor&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.8.0&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.5.5&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/hln12/Documents/Cornell/INFO5100&quot;,
@@ -118,8 +120,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
-        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
+        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
       </set>
     </attachedChunks>
   </component>
@@ -150,6 +152,7 @@
       <workItem from="1728396627205" duration="5062000" />
       <workItem from="1728495556528" duration="4835000" />
       <workItem from="1728503040926" duration="922000" />
+      <workItem from="1729985409985" duration="567000" />
     </task>
     <task id="LOCAL-00001" summary="initialized node express">
       <option name="closed" value="true" />
@@ -231,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728502323272</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="fixed static image">
+      <option name="closed" value="true" />
+      <created>1729920632230</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1729920632230</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +271,7 @@
     <MESSAGE value="fixed explicit password log" />
     <MESSAGE value="added more comments and updated folder names." />
     <MESSAGE value="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel." />
-    <option name="LAST_COMMIT_MESSAGE" value="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel." />
+    <MESSAGE value="fixed static image" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed static image" />
   </component>
 </project>

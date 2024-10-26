@@ -24,14 +24,18 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" object-ref="schemas/UFP_Employee_Info/tables/Employee" />
+      <object connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" object-ref="schemas/UFP_Employee_Info/tables/UserFaceMapping" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="35943d3f-23d3-48e2-a34e-f02bf522c842" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" dataset="UFP_Employee_Info.employees" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" dataset="UFP_Employee_Info.Employee" active-filter-id="" />
+    <filter-actions connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" dataset="UFP_Employee_Info.Employee" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" dataset="UFP_Employee_Info.UserFaceMapping" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />

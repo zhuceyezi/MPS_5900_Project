@@ -8,18 +8,20 @@ const UserFaceMapping = database.define('UserFaceMapping', {
         references: {
             model: 'Employee',
             key: 'id'
-        }
+        },
+        unique: true
     },
     faceId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true
+        unique: true
     },
     imageId: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
     }
 }, {
                                             timestamps: false,
