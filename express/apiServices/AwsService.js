@@ -15,7 +15,13 @@ const sharp = require("sharp");
 dotenv.config({path: "../../.env"});
 
 
+/**
+ * AwsService class to interact with AWS Rekognition service.
+ */
 class AwsService {
+    /**
+     * Creates an instance of AwsService.
+     */
     constructor() {
         this.collectionID = "my-face-collection"; // dummy collection. TODO: replace this.
         this.client = new RekognitionClient({
@@ -27,6 +33,13 @@ class AwsService {
                                             });
     }
     
+    /**
+     * Resizes the image to be under 5MB.
+     * @param {Buffer} imageBytes - The image bytes to resize.
+     * @param {number} [resizeQuality=90] - The quality of the resized image.
+     * @returns {Promise<Buffer>} - The resized image bytes.
+     * @private
+     */
     async #resizeImage(imageBytes, resizeQuality = 90) {
         let resizedImageBytes = imageBytes;
         while (resizedImageBytes.length > 5242880) { // 5MB in bytes
@@ -37,6 +50,10 @@ class AwsService {
         return resizedImageBytes;
     }
     
+    /**
+     * Lists all collections in AWS Rekognition.
+     * @returns {Promise<string[]>} - The list of collection IDs.
+     */
     async listCollections() {
         const params = {};
         const command = new ListCollectionsCommand(params);
@@ -44,6 +61,11 @@ class AwsService {
         return response['CollectionIds'];
     }
     
+    /**
+     * Detects faces in an image.
+     * @param {string} imagePath - The path to the image file.
+     * @returns {Promise<boolean>} - True if faces are detected, false otherwise.
+     */
     async detectFaces(imagePath) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -63,6 +85,11 @@ class AwsService {
         }
     }
     
+    /**
+     * Deletes all faces in a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @returns {Promise<boolean>} - True if faces are deleted, false otherwise.
+     */
     async deleteAllFaces(collectionId) {
         const faceIds = [];
         const faceList = await this.listFaces(collectionId);
@@ -74,7 +101,14 @@ class AwsService {
         return this.deleteFaces(collectionId, faceIds);
     }
     
-    async searchFacesByImage(collectionId, imagePath, faceMatchThreshold = 99) {
+    /**
+     * Searches for faces in an image within a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @param {string} imagePath - The path to the image file.
+     * @param {number} [faceMatchThreshold=99] - The face match threshold.
+     * @returns {Promise<void>}
+     */
+    async #searchFacesByImage(collectionId, imagePath, faceMatchThreshold = 99) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
             const params = {
@@ -95,7 +129,14 @@ class AwsService {
         }
     }
     
-    async simpleSearchFacesByImage(collectionId, imageBuffer, faceMatchThreshold = 99) {
+    /**
+     * Searches for faces in an image buffer within a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @param {Buffer} imageBuffer - The image buffer.
+     * @param {number} [faceMatchThreshold=99] - The face match threshold.
+     * @returns {Promise<string|undefined>} - The face ID if found, otherwise undefined.
+     */
+    async searchFacesByImage(collectionId, imageBuffer, faceMatchThreshold = 99) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
             const params = {
@@ -120,7 +161,14 @@ class AwsService {
         }
     }
     
-    async indexFaces(collectionId, imagePath, imageName = undefined) {
+    /**
+     * Indexes faces in an image within a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @param {string} imagePath - The path to the image file.
+     * @param {string} [imageName] - The name of the image.
+     * @returns {Promise<boolean>} - True if faces are indexed, false otherwise.
+     */
+    async #indexFaces(collectionId, imagePath, imageName = undefined) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
             let externalImageIdSplit;
@@ -149,7 +197,13 @@ class AwsService {
         }
     }
     
-    async simpleIndex(collectionId, imageBuffer) {
+    /**
+     * Indexes faces in an image buffer within a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @param {Buffer} imageBuffer - The image buffer.
+     * @returns {Promise<string|undefined>} - The face ID if indexed, otherwise undefined.
+     */
+    async indexFaces(collectionId, imageBuffer) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
             const params = {
@@ -174,6 +228,12 @@ class AwsService {
         }
     }
     
+    /**
+     * Lists faces in a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @param {string[]} [faceIds=[]] - The list of face IDs.
+     * @returns {Promise<Object|null>} - The response from AWS Rekognition or null if an error occurs.
+     */
     async listFaces(collectionId, faceIds = []) {
         try {
             const params = {
@@ -190,6 +250,12 @@ class AwsService {
         }
     }
     
+    /**
+     * Deletes faces from a collection.
+     * @param {string} collectionId - The ID of the collection.
+     * @param {string[]} faceIds - The list of face IDs to delete.
+     * @returns {Promise<boolean>} - True if faces are deleted, false otherwise.
+     */
     async deleteFaces(collectionId, faceIds) {
         try {
             const params = {

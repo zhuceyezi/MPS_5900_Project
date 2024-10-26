@@ -3,22 +3,28 @@ const {Op} = require("sequelize");
 
 
 class UserService {
-
-    constructor(EmployeeModel) {
-        this.Employee = EmployeeModel
-    }
-
+    
     /**
-     *
-     * @param employeeId
-     * @param employeeName
-     * @returns {Promise<boolean>}
+     * Creates an instance of UserService.
+     * @param {Object} EmployeeModel - The Employee model.
+     */
+    constructor(EmployeeModel) {
+        this.Employee = EmployeeModel;
+    }
+    
+    /**
+     * Adds an employee to the system.
+     * @param {Object} params - The parameters.
+     * @param {string} params.employeeId - The employee ID.
+     * @param {string} params.employeeName - The employee name.
+     * @param {Object} [options={}] - Additional options.
+     * @returns {Promise<boolean>} - True if the employee was added successfully, false otherwise.
      */
     async addEmployee({employeeId, employeeName}, options = {}) {
         try {
             console.debug(
                 `Adding Employee: ${JSON.stringify(
-                    /** @type Employee*/
+                    /** @type Employee */
                     {
                         employeeId,
                         employeeName
@@ -39,12 +45,20 @@ class UserService {
             return false;
         }
     }
-
+    
+    /**
+     * Adds an employee and returns the user ID.
+     * @param {Object} params - The parameters.
+     * @param {string} params.employeeId - The employee ID.
+     * @param {string} params.employeeName - The employee name.
+     * @param {Object} [options={}] - Additional options.
+     * @returns {Promise<number>} - The user ID if added successfully, -1 otherwise.
+     */
     async addEmployeeReturnUserId({employeeId, employeeName}, options = {}) {
         try {
             console.debug(
                 `Adding Employee: ${JSON.stringify(
-                    /** @type Employee*/
+                    /** @type Employee */
                     {
                         employeeId,
                         employeeName
@@ -65,17 +79,20 @@ class UserService {
             return -1;
         }
     }
-
+    
+    /**
+     * Gets an employee by ID.
+     * @param {string} employeeId - The employee ID.
+     * @returns {Promise<Object|null>} - The employee object if found, null otherwise.
+     */
     async getEmployeeById(employeeId) {
         return await this.Employee.findOne({where: {id: employeeId}});
     }
-
-    //I think it should be deleteEmployeeById
+    
     /**
-     *
-     * @param name
-     * @returns {Promise<boolean>}
-     *
+     * Deletes an employee by name.
+     * @param {string} name - The employee name.
+     * @returns {Promise<boolean>} - True if the employee was deleted successfully, false otherwise.
      */
     async deleteEmployeeByName(name) {
         try {
@@ -91,14 +108,14 @@ class UserService {
             return false;
         }
     }
-
+    
     /**
-     *
-     * @param employeeId
-     * @param lastLogin
-     * @param employeeName
-     * @param id
-     * @returns {Promise<boolean>}
+     * Updates an employee.
+     * @param {Object} params - The parameters.
+     * @param {string} params.employeeId - The employee ID.
+     * @param {Date} params.lastLogin - The last login date.
+     * @param {string} params.employeeName - The employee name.
+     * @returns {Promise<boolean>} - True if the employee was updated successfully, false otherwise.
      */
     async updateEmployee({
                              employeeId,
@@ -139,11 +156,7 @@ class UserService {
             return false;
         }
     }
-
-
 }
 
 
 module.exports = UserService;
-
-
