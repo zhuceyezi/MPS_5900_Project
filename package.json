@@ -12,7 +12,7 @@
     "sharp": "^0.33.5"
   },
   "scripts": {
-    "start": "node .\\express\\bin\\www",
-    "dev": "nodemon .\\express\\bin\\www"
+    "start": "node ./express/bin/www",
+    "dev": "nodemon ./express/bin/www"
   }
 }

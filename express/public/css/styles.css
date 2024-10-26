@@ -68,7 +68,7 @@ button {
     margin: 5px;
 }
 
-#capture, #retake {
+#regcapture, #retake {
     position: absolute; /* Position both buttons absolutely */
     left: 40%;          /* Center horizontally */
 }

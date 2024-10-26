@@ -3,7 +3,7 @@ const canvas = document.createElement("canvas"); // Create a canvas dynamically
 const capturedPhoto = document.getElementById("capturedPhoto");
 const context = canvas.getContext("2d");
 
-const captureButton = document.getElementById("capture");
+const captureButton = document.getElementById("regcapture");
 const submitButton = document.getElementById("submit");
 const retakeButton = document.getElementById("retake");
 
