@@ -1,12 +1,12 @@
 const {
-          DeleteFacesCommand,
-          DetectFacesCommand,
-          IndexFacesCommand,
-          ListCollectionsCommand,
-          ListFacesCommand,
-          RekognitionClient,
-          SearchFacesByImageCommand
-      } = require('@aws-sdk/client-rekognition');
+    DeleteFacesCommand,
+    DetectFacesCommand,
+    IndexFacesCommand,
+    ListCollectionsCommand,
+    ListFacesCommand,
+    RekognitionClient,
+    SearchFacesByImageCommand
+} = require('@aws-sdk/client-rekognition');
 
 const dotenv = require("dotenv");
 const fs = require("fs");
@@ -26,7 +26,7 @@ class AwsService {
                                                 }
                                             });
     }
-
+    
     async #resizeImage(imageBytes, resizeQuality = 90) {
         let resizedImageBytes = imageBytes;
         while (resizedImageBytes.length > 5242880) { // 5MB in bytes
@@ -36,14 +36,14 @@ class AwsService {
         }
         return resizedImageBytes;
     }
-
+    
     async listCollections() {
         const params = {};
         const command = new ListCollectionsCommand(params);
         const response = await this.client.send(command);
         return response['CollectionIds'];
     }
-
+    
     async detectFaces(imagePath) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -62,7 +62,7 @@ class AwsService {
             return false;
         }
     }
-
+    
     async deleteAllFaces(collectionId) {
         const faceIds = [];
         const faceList = await this.listFaces(collectionId);
@@ -73,7 +73,7 @@ class AwsService {
         console.log(faceIds);
         return this.deleteFaces(collectionId, faceIds);
     }
-
+    
     async searchFacesByImage(collectionId, imagePath, faceMatchThreshold = 99) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -94,7 +94,7 @@ class AwsService {
             console.log(err);
         }
     }
-
+    
     async simpleSearchFacesByImage(collectionId, imageBuffer, faceMatchThreshold = 99) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
@@ -119,7 +119,7 @@ class AwsService {
             return undefined;
         }
     }
-
+    
     async indexFaces(collectionId, imagePath, imageName = undefined) {
         try {
             const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
@@ -148,7 +148,7 @@ class AwsService {
             return false;
         }
     }
-
+    
     async simpleIndex(collectionId, imageBuffer) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
@@ -173,7 +173,7 @@ class AwsService {
             return undefined;
         }
     }
-
+    
     async listFaces(collectionId, faceIds = []) {
         try {
             const params = {
@@ -189,7 +189,7 @@ class AwsService {
             return null;
         }
     }
-
+    
     async deleteFaces(collectionId, faceIds) {
         try {
             const params = {
