@@ -33,13 +33,15 @@ class FacialRecService {
             console.debug(employeeId, employeeName, imageBuffer, collectionId);
             const employeeResult = await this.userServices.addEmployeeReturnUserId({employeeId, employeeName},
                                                                                    {transaction: trans});
-            const imageId = await this.awsService.indexFaces(collectionId, imageBuffer);
-            if (imageId === undefined || employeeResult === -1) {
+            const [faceId, imageId] = await this.awsService.indexFaces(collectionId, imageBuffer);
+            if (faceId === undefined || imageId === undefined || employeeResult === -1) {
                 console.log("Error in adding employee");
                 await trans.rollback();
                 return false;
             }
-            await this.UserFaceMapping.create({employeeId: employeeResult, imageId}, {transaction: trans});
+            console.log(imageId, faceId);
+            await this.UserFaceMapping.create({employeeId: employeeResult, imageId: imageId, faceId: faceId},
+                                              {transaction: trans});
             await trans.commit();
             return true;
         } catch (error) {
