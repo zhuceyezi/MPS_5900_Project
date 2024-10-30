@@ -40,6 +40,7 @@ window.onload = function() {
                 
                 document.getElementById('employeeId').textContent = employeeData.employeeId;
                 document.getElementById('employeeName').textContent = employeeData.employeeName;
+                document.getElementById('employeeName2').textContent = employeeData.employeeName;
                 document.getElementById('lastLogin').textContent = new Date(employeeData.lastLogin).toLocaleString();
             }
 };
