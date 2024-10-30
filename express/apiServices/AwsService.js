@@ -134,7 +134,7 @@ class AwsService {
      * @param {string} collectionId - The ID of the collection.
      * @param {Buffer} imageBuffer - The image buffer.
      * @param {number} [faceMatchThreshold=99] - The face match threshold.
-     * @returns {Promise<string|undefined>} - The face ID if found, otherwise undefined.
+     * @returns {Promise<string[]|undefined>} - [imageId, FaceId] if found, otherwise undefined.
      */
     async searchFacesByImage(collectionId, imageBuffer, faceMatchThreshold = 99) {
         try {
@@ -152,7 +152,7 @@ class AwsService {
             const response = await this.client.send(command);
             console.log(JSON.stringify(response, null, 2));
             if (response.FaceMatches && response.FaceMatches.length > 0 && response.FaceMatches[0].Face) {
-                return response.FaceMatches[0].Face.FaceId;
+                return [response.FaceMatches[0].Face.ImageId, response.FaceMatches[0].Face.FaceId];
             }
             return undefined;
         } catch (err) {
@@ -201,7 +201,7 @@ class AwsService {
      * Indexes faces in an image buffer within a collection.
      * @param {string} collectionId - The ID of the collection.
      * @param {Buffer} imageBuffer - The image buffer.
-     * @returns {Promise<string|undefined>} - The face ID if indexed, otherwise undefined.
+     * @returns {Promise<string[]|undefined>} - [imageId, FaceId] if indexed, otherwise undefined.
      */
     async indexFaces(collectionId, imageBuffer) {
         try {
@@ -217,11 +217,11 @@ class AwsService {
             };
             const command = new IndexFacesCommand(params);
             const response = await this.client.send(command);
-            if (response.FaceRecords && response.FaceRecords.length > 0 && response.FaceRecords[0].Face) {
-                return response.FaceRecords[0].Face.FaceId;
+            if (!(response.FaceRecords && response.FaceRecords.length > 0 && response.FaceRecords[0].Face)) {
+                return undefined;
             }
-            console.log(JSON.stringify(response));
-            return undefined;
+            console.log(JSON.stringify(response, 2, null));
+            return [response.FaceRecords[0].Face.FaceId, response.FaceRecords[0].Face.ImageId];
         } catch (err) {
             console.log(err);
             return undefined;

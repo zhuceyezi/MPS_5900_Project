@@ -6,10 +6,11 @@ class UserService {
     
     /**
      * Creates an instance of UserService.
-     * @param {Object} EmployeeModel - The Employee model.
+     * @param models - The DB models.
      */
-    constructor(EmployeeModel) {
-        this.Employee = EmployeeModel;
+    constructor(models) {
+        this.Employee = models.Employee;
+        this.Feedback = models.Feedback;
     }
     
     /**
@@ -73,7 +74,7 @@ class UserService {
                 employeeId: employeeId
             };
             const employee = await this.Employee.create(values, options);
-            return employee.id;
+            return employee.key;
         } catch (error) {
             console.error(error);
             return -1;
@@ -85,8 +86,8 @@ class UserService {
      * @param {string} employeeId - The employee ID.
      * @returns {Promise<Object|null>} - The employee object if found, null otherwise.
      */
-    async getEmployeeById(employeeId) {
-        return await this.Employee.findOne({where: {id: employeeId}});
+    async getEmployeeByKey(employeeKey) {
+        return await this.Employee.findOne({where: {key: employeeKey}});
     }
     
     /**
@@ -151,6 +152,41 @@ class UserService {
             );
             //check if the update was successful
             return resultArray[0] > 0;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
+    
+    // TODO: Retreive employees by ID and name
+    
+    /**
+     * Adds feedback for an employee.
+     * @param {Object} params - The parameters as a json.
+     * @param {string} params.employeeId - The employee ID.
+     * @param {string} params.employeeName - The employee name.
+     * @param {string} params.feedback - The feedback content.
+     * @param {Object} options - Additional options as json for model.create() method for sequelize.
+     * @returns {Promise<boolean>} - True if the feedback was added successfully, false otherwise.
+     */
+    async addFeedback({employeeId, employeeName, feedback}, options = {}) {
+        try {
+            const employee = await this.Employee.findOne({
+                                                             where: {
+                                                                 [Op.and]: [
+                                                                     {employeeId: employeeId},
+                                                                     {employeeName: employeeName}
+                                                                 ]
+                                                             }
+                                                         });
+            if (employee === null) {
+                throw new Error("Employee not found");
+            }
+            await this.Feedback.create({
+                                           content: feedback,
+                                           employeeKey: employee.key
+                                       }, options);
+            return true;
         } catch (e) {
             console.error(e);
             return false;

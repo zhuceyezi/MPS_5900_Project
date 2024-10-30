@@ -1,4 +1,5 @@
-const {database} = require('../models/models');
+const models = require('../models/models');
+const database = models.database;
 
 
 /**
@@ -9,12 +10,12 @@ class FacialRecService {
      * Creates an instance of FacialRecService.
      * @param {Object} userServices - The user services instance.
      * @param {Object} awsService - The AWS service instance.
-     * @param {Object} UserFaceMapping - The UserFaceMapping model.
+     * @param models - The DB models.
      */
-    constructor(userServices, awsService, UserFaceMapping) {
+    constructor(userServices, awsService, models) {
         this.userServices = userServices;
         this.awsService = awsService;
-        this.UserFaceMapping = UserFaceMapping;
+        this.UserFaceMapping = models.UserFaceMapping;
     }
     
     /**
@@ -33,13 +34,15 @@ class FacialRecService {
             console.debug(employeeId, employeeName, imageBuffer, collectionId);
             const employeeResult = await this.userServices.addEmployeeReturnUserId({employeeId, employeeName},
                                                                                    {transaction: trans});
-            const imageId = await this.awsService.indexFaces(collectionId, imageBuffer);
-            if (imageId === undefined || employeeResult === -1) {
+            const [faceId, imageId] = await this.awsService.indexFaces(collectionId, imageBuffer);
+            if (faceId === undefined || imageId === undefined || employeeResult === -1) {
                 console.log("Error in adding employee");
                 await trans.rollback();
                 return false;
             }
-            await this.UserFaceMapping.create({employeeId: employeeResult, imageId}, {transaction: trans});
+            console.log(imageId, faceId);
+            await this.UserFaceMapping.create({employeeKey: employeeResult, imageId: imageId, faceId: faceId},
+                                              {transaction: trans});
             await trans.commit();
             return true;
         } catch (error) {
@@ -82,7 +85,7 @@ class FacialRecService {
             if (mapping === null) {
                 return null;
             }
-            return await this.userServices.getEmployeeById(mapping.employeeId);
+            return await this.userServices.getEmployeeByKey(mapping.employeeKey);
         } catch (error) {
             console.error(error);
             return null;
