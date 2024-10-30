@@ -2,7 +2,7 @@ class UserController {
     constructor(userServices) {
         this.userServices = userServices;
     }
-
+    
     //field data should be in the request body as json
     async addEmployee(req, res) {
         try {
@@ -12,7 +12,7 @@ class UserController {
             if (employeeId === undefined || employeeName === undefined) {
                 return res.status(400)
                           .json(
-                              {message: "Bad request"});
+                              {message: "employeeId or employeeName not found in request body"});
             }
             const addResult = await this.userServices.addEmployee({employeeId, employeeName});
             if (addResult) return res.status(201).json({message: "Employee added"});
@@ -22,7 +22,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error"});
         }
     }
-
+    
     //the name should be delivered as request parameter
     async deleteEmployeeByName(req, res) {
         try {
@@ -36,7 +36,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error"});
         }
     }
-
+    
     async updateEmployee(req, res) {
         try {
             const body = req.body;
@@ -51,6 +51,27 @@ class UserController {
             return res.status(404).json({message: "Employee not found"});
         } catch (err) {
             console.log(err);
+            return res.status(500).json({message: "Internal server error"});
+        }
+    }
+    
+    
+    async addFeedback(req, res) {
+        try {
+            const body = req.body;
+            const employeeId = body.employeeId;
+            const employeeName = body.employeeName;
+            const feedback = body.content;
+            if (employeeId === undefined || employeeName === undefined) {
+                return res.status(400).json({message: "employeeId or employeeName not found in request body"});
+            }
+            const addResult = await this.userServices.addFeedback({employeeId, employeeName, feedback});
+            if (!addResult) {
+                throw new Error("addFeedback failed");
+            }
+            return res.status(201).json({message: "Feedback added"});
+        } catch (e) {
+            console.log(e);
             return res.status(500).json({message: "Internal server error"});
         }
     }

@@ -1,4 +1,5 @@
-const {database} = require('../models/models');
+const models = require('../models/models');
+const database = models.database;
 
 
 /**
@@ -9,12 +10,12 @@ class FacialRecService {
      * Creates an instance of FacialRecService.
      * @param {Object} userServices - The user services instance.
      * @param {Object} awsService - The AWS service instance.
-     * @param {Object} UserFaceMapping - The UserFaceMapping model.
+     * @param models - The DB models.
      */
-    constructor(userServices, awsService, UserFaceMapping) {
+    constructor(userServices, awsService, models) {
         this.userServices = userServices;
         this.awsService = awsService;
-        this.UserFaceMapping = UserFaceMapping;
+        this.UserFaceMapping = models.UserFaceMapping;
     }
     
     /**
@@ -40,7 +41,7 @@ class FacialRecService {
                 return false;
             }
             console.log(imageId, faceId);
-            await this.UserFaceMapping.create({employeeId: employeeResult, imageId: imageId, faceId: faceId},
+            await this.UserFaceMapping.create({employeeKey: employeeResult, imageId: imageId, faceId: faceId},
                                               {transaction: trans});
             await trans.commit();
             return true;
