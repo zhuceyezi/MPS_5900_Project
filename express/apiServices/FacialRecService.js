@@ -85,7 +85,7 @@ class FacialRecService {
             if (mapping === null) {
                 return null;
             }
-            return await this.userServices.getEmployeeById(mapping.employeeId);
+            return await this.userServices.getEmployeeByKey(mapping.employeeKey);
         } catch (error) {
             console.error(error);
             return null;

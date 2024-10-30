@@ -55,7 +55,6 @@ class UserController {
         }
     }
     
-    
     async addFeedback(req, res) {
         try {
             const body = req.body;

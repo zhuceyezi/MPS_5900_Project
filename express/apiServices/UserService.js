@@ -86,8 +86,8 @@ class UserService {
      * @param {string} employeeId - The employee ID.
      * @returns {Promise<Object|null>} - The employee object if found, null otherwise.
      */
-    async getEmployeeById(employeeId) {
-        return await this.Employee.findOne({where: {id: employeeId}});
+    async getEmployeeByKey(employeeKey) {
+        return await this.Employee.findOne({where: {key: employeeKey}});
     }
     
     /**
@@ -162,7 +162,7 @@ class UserService {
     
     /**
      * Adds feedback for an employee.
-     * @param {Object} params - The parameters.
+     * @param {Object} params - The parameters as a json.
      * @param {string} params.employeeId - The employee ID.
      * @param {string} params.employeeName - The employee name.
      * @param {string} params.feedback - The feedback content.
