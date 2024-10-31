@@ -2,12 +2,12 @@ const {DataTypes} = require("sequelize");
 const {database} = require("../config/databaseSetUp");
 
 const UserFaceMapping = database.define('UserFaceMapping', {
-    employeeId: {
+    employeeKey: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'Employee',
-            key: 'id'
+            key: 'key'
         },
         unique: true
     },

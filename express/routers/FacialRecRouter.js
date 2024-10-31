@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (UserService, employeeModel, AwsService, UserFaceMapping, FacialRecService, FacialRecController,
+module.exports = (UserService, AwsService, models, FacialRecService,
+                  FacialRecController,
                   upLoad,
                   collectionId) => {
-    const userServiceInstance = new UserService(employeeModel);
+    const userServiceInstance = new UserService(models);
     const awsServiceInstance = new AwsService();
-    const facialRecService = new FacialRecService(userServiceInstance, awsServiceInstance, UserFaceMapping);
+    const facialRecService = new FacialRecService(userServiceInstance, awsServiceInstance, models);
     const facialRecController = new FacialRecController(facialRecService, collectionId);
     //POST /employees
     router.post('/', (req, res, next) => {
@@ -19,11 +20,11 @@ module.exports = (UserService, employeeModel, AwsService, UserFaceMapping, Facia
             facialRecController.addEmployee(req, res);
         });
     });
-
-
+    
+    
     //POST /employees/validate
     router.post('/validate', upLoad.single('image'), (req, res) => facialRecController.validateEmployee(req, res));
     router.delete('/all', (req, res) => facialRecController.deleteAllFaces(req, res));
-
+    
     return router;
 }

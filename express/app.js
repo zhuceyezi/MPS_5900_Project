@@ -8,20 +8,15 @@ const {database} = require("./models/models");
 const userRouter = require("./routers/userRouter");
 const userServices = require("./apiServices/UserService");
 const userController = require("./controllers/UserController");
-const employeeModel = require("./models/Employee");
-const upLoad = require("./config/multerSetUp");
+const models = require("./models/models");
+const upload = require("./config/multerSetUp");
 const facialRecService = require("./apiServices/FacialRecService");
 const facialRecController = require("./controllers/FacialRecController");
-const UserFaceMapping = require("./models/UserFaceMapping");
 const awsService = require("./apiServices/AwsService");
 const facialRecRouter = require("./routers/FacialRecRouter");
 const cors = require('cors');
-
 const app = express();
-const PORT = 3000;
-
 app.use(cors());// Allow all origins, you can customize it later
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -48,12 +43,13 @@ database
 
 
 app.use("/", indexRouter);
-app.use("/employees", userRouter(userController, userServices, employeeModel));
+app.use("/employees", userRouter(userController, userServices, upload, models));
 
 const collectionId = process.env.COLLECTION_ID;
 app.use("/facial",
-        facialRecRouter(userServices, employeeModel, awsService, UserFaceMapping, facialRecService, facialRecController,
-                        upLoad,
+        facialRecRouter(userServices, awsService, models, facialRecService,
+                        facialRecController,
+                        upload,
                         collectionId));
 
 

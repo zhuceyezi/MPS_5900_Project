@@ -6,13 +6,12 @@ const Employee = database.define("Employee", {
     // Model attributes are defined here
     /**
      * @typedef {Object} EmployeeAttributes
-     * @property {string|undefined} id
-     * @property {string} imageId
+     * @property {integer} key
      * @property {string} employeeName
      * @property {string|undefined} employeeId
      * @property {Date} [lastLogin|undefined]
      */
-    id: {
+    key: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
@@ -20,7 +19,8 @@ const Employee = database.define("Employee", {
     },
     employeeId: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false,
+        unique: true
     },
     employeeName: {
         type: DataTypes.STRING,
