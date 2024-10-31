@@ -5,6 +5,11 @@ const employeeInfoDiv = document.getElementById("employee-info");
 //const uploadButton = document.getElementById('upload');
 const canvas = document.createElement("canvas"); // Create a canvas dynamically
 
+//automation button
+const autoButton = document.getElementById("auto-capture");
+let autoCapturing = false;
+let captureInterval;
+
 // Access the user's camera and stream it to the video element
 navigator.mediaDevices
          .getUserMedia({video: true})
@@ -22,7 +27,7 @@ captureButton.addEventListener("click", () => {
     canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     
-    // convert canvas to blob
+    // convert canvas to blob and send to api
     canvas.toBlob(
         async (blob) => {
             try {
@@ -34,6 +39,42 @@ captureButton.addEventListener("click", () => {
         `image/jpeg`,
         0.95
     );
+});
+
+
+//Auto capture event listener
+autoButton.addEventListener("click", () => {
+    if (!autoCapturing) {
+        // Start auto capturing
+        autoCapturing = true;
+        autoButton.textContent = "Stop Auto Capture"; // Change button text
+
+        // Set interval to capture photo every 2 sec
+        captureInterval = setInterval(() => {
+            const context = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // convert canvas to blob and send to api
+            canvas.toBlob(
+                async (blob) => {
+                    try {
+                        await sendImageToAPI(blob);
+                    } catch (error) {
+                        console.error("error image:", error);
+                    }
+                },
+                `image/jpeg`,
+                0.95
+            );
+        }, 2000); // take photo every 2 sec
+    } else {
+        // Stop auto capturing
+        autoCapturing = false;
+        autoButton.textContent = "Take Photo Every 2s"; // Reset button text
+        clearInterval(captureInterval);
+    }
 });
 
 // Convert canvas to image and display in the img element
@@ -66,8 +107,8 @@ async function sendImageToAPI(imageBlob) {
         const formData = new FormData();
         
         // use local image instead of captured image for quicker testing
-        const localImagePath = "test_photo.jpg";
-        const res = await fetch(localImagePath);
+        // const localImagePath = "test_photo.jpg";
+        // const res = await fetch(localImagePath);
         
         // imageBlob = await res.blob();
         
@@ -101,9 +142,9 @@ async function sendImageToAPI(imageBlob) {
             //store info for next page
             sessionStorage.setItem("employeeData", JSON.stringify(employeeData));
             // Redirect to the employee info page
-            window.location.href = "success.html";
+            // window.location.href = "success.html"; //temp disable for testing autocapture
         } else {
-            alert("Facial recognition failed. Please try again.");
+            // alert("Facial recognition failed. Please try again."); //temp disable for testing autocapture
             console.error("Facial recognition failed:", response.statusText);
         }
         // const result = await response.json();
