@@ -74,6 +74,22 @@ class UserController {
             return res.status(500).json({message: "Internal server error"});
         }
     }
+    
+    async verifyEmployee(req, res) {
+        try {
+            const employeeId = req.query.employeeId;
+            const employeeName = req.query.employeeName;
+            if (employeeId === undefined || employeeName === undefined) {
+                return res.status(400).json({message: "employeeId or employeeName not found in request query"});
+            }
+            const verifyResult = await this.userServices.verifyEmployee({employeeId, employeeName});
+            if (verifyResult) return res.status(200).json({message: "Employee verified"});
+            return res.status(404).json({message: "Employee not found"});
+        } catch (e) {
+            console.log(e);
+            return res.status(500).json({message: "Internal server error"});
+        }
+    }
 }
 
 

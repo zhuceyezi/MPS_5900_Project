@@ -14,6 +14,7 @@ module.exports = (controller, service, upload, models) => {
     //PUT /employees
     router.put('/', (req, res) => userController.updateEmployee(req, res));
     
+    router.get('/verifyEmployee', (req, res) => userController.verifyEmployee(req, res));
     
     router.post('/addFeedback', upload.none(), (req, res) => userController.addFeedback(req, res));
     return router;
