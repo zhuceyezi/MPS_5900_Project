@@ -1,52 +1,62 @@
-const problemInput = document.getElementById('problem');
-const charCount = document.getElementById('charCount');
-const feedbackForm = document.getElementById('feedbackForm');
-const successPopup = document.getElementById('successPopup');
-const countdownElement = document.getElementById('countdown');
+const form = document.getElementById("feedbackForm");
+const charCount = document.getElementById("charCount");
+const textarea = document.getElementById("problem");
+const popup = document.getElementById("successPopup");
+const countdownEl = document.getElementById("countdown");
 
-problemInput.addEventListener('input', () => {
-    charCount.textContent = `${problemInput.value.length}/420`;
+textarea.addEventListener("input", () => {
+  charCount.textContent = `${textarea.value.length}/500`;
 });
 
-feedbackForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    // Collect form data
-    const formData = {
-        name: document.getElementById('name').value,
-        id: document.getElementById('id').value,
-        problem: problemInput.value
-    };
+  const formData = new FormData(form);
+  const data = {
+    employeeID: formData.get("employeeID"),
+    employeeName: formData.get("employeeName"),
+    content: formData.get("content"),
+  };
 
-    try {
-        // Send the data to the server (adjust the URL to your backend endpoint)
-        const response = await fetch('/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
+  console.log("Form data captured:", data);
 
-        if (response.ok) {
-            // Show the success popup
-            successPopup.style.display = 'block';
+  try {
+    const response = await fetch(
+      "http://localhost:3000/employees/addFeedback",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
 
-            // Start the countdown and redirect after 3 seconds
-            let countdown = 3;
-            const interval = setInterval(() => {
-                countdown -= 1;
-                countdownElement.textContent = countdown;
-                if (countdown === 0) {
-                    clearInterval(interval);
-                    window.location.href = "1.Main Page.html"; // Redirect to the main page
-                }
-            }, 1000);
-        } else {
-            alert('Failed to submit feedback. Please try again.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+    console.log("Response received:", response);
+
+    if (response.status === 400) {
+      showPopup();
+      form.reset();
+      charCount.textContent = "0/500";
+    } else {
+        console.error("Error in submission. Response status:", response.status);
+        alert("There was an error submitting your feedback. Please try again.");
     }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Could not submit feedback.");
+  }
 });
+
+function showPopup() {
+  popup.style.display = "block";
+  let countdown = 3;
+  countdownEl.textContent = countdown;
+  const interval = setInterval(() => {
+    countdown -= 1;
+    countdownEl.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(interval);
+      popup.style.display = "none";
+      window.location.href = "index.html"; // Redirect to the main page
+    }
+  }, 1000);
+}
