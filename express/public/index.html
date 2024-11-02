@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main Page</title>
-    <link rel="stylesheet" href="css/styles.css"/>
-
-</head>
-<body>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
     <header class="header">
-        <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo"> 
+      <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo" />
     </header>
     <main>
-        <div id="camera-container">
-            <div id="instructions">
-                <p>Remove any accessories covering your face.</p>
-                <p>Align your face within the frame</p>
-                <p>Press the "Take Photo" when you are ready</p>
-            </div>
-    
-            <!-- Live camera view -->
-            <video id="video" autoplay></video>
-    
-            <button id="capture">Take Photo</button>
-            <button id="auto-capture">Take Photo Every 2s</button>
-            
-
-            <!-- Display captured image -->
-            <!--<img id="photo" alt="Captured Photo" />-->
-
-            <!-- Button to upload the image -->
-            <!--<button id="upload">Upload Photo</button> -->
-            
-            <a href="accountlogin.html">
-                <button id="signin/up">Account Login</button> <!-- Button to Account login -->
-            </a>
-            
-            <a href="registration.html">
-                <button id="signin/up">Sign Up</button> <!-- Button to sign up -->
-            </a>
-            
-            <a href="help.html">
-                <button id="help" class="help-button"><img src= "img/Help_Button_icon.png" alt="helpicon" class="buttonicon" > Help </button>
-            </a>        
+      <div id="camera-container">
+        <div id="instructions">
+          <p>Remove any accessories covering your face.</p>
+          <p>Align your face within the frame</p>
+          <p>Press the "Take Photo" when you are ready</p>
         </div>
-        
-        
+
+        <!-- Live camera view -->
+        <video id="video" autoplay></video>
+
+        <button id="capture">Record Background</button>
+        <button id="auto-capture">Take Photo Every 2s for auto login</button>
+
+        <!-- Display captured image -->
+        <!--<img id="photo" alt="Captured Photo" />-->
+
+        <!-- Button to upload the image -->
+        <!--<button id="upload">Upload Photo</button> -->
+
+        <a href="accountlogin.html">
+          <button id="signin/up">Account Login</button>
+          <!-- Button to Account login -->
+        </a>
+
+        <a href="registration.html">
+          <button id="signin/up">Sign Up</button>
+          <!-- Button to sign up -->
+        </a>
+
+        <a href="help.html">
+          <button id="help" class="help-button">
+            <img
+              src="img/Help_Button_icon.png"
+              alt="helpicon"
+              class="buttonicon"
+            />
+            Help
+          </button>
+        </a>
+      </div>
     </main>
 
     <script>
-        // Debug check - remove this later
-        console.log("Elements on page:", {
-            video: document.getElementById("video"),
-            captureButton: document.getElementById("capture")
-        });
+      // Debug check - remove this later
+      console.log("Elements on page:", {
+        video: document.getElementById("video"),
+        captureButton: document.getElementById("capture"),
+      });
     </script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/resemblejs/resemble.js"></script>
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>

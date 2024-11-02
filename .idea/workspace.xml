@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="fixed static image">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/apiServices/AwsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/AwsService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/apiServices/FacialRecService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/FacialRecService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/apiServices/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/UserService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/models/UserFaceMapping.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/UserFaceMapping.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/express/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/express/public/js/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/public/js/script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
