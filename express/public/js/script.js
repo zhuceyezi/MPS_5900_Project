@@ -5,7 +5,7 @@ const employeeInfoDiv = document.getElementById("employee-info");
 //const uploadButton = document.getElementById('upload');
 const canvas = document.createElement("canvas"); // Create a canvas dynamically
 
-const thresholdForFacialRec = 10; // Threshold for facial image difference
+const thresholdForFacialRec = 20; // Threshold for facial image difference
 const thresholdForBackgroundImage = 1; // Threshold for background image difference
 
 //automation button
@@ -64,16 +64,16 @@ function blobToBase64(blob) {
   });
 }
 //return the percentage of difference between two images
-function compareImages(image1, image2) {
-  //console.log(image1, image2);
-  return new Promise((resolve) => {
-    resemble(image1)
-      .compareTo(image2)
-      .onComplete((data) => {
-        resolve(data.misMatchPercentage);
-      });
-  });
-}
+// function compareImages(image1, image2) {
+//   //console.log(image1, image2);
+//   return new Promise((resolve) => {
+//     resemble(image1)
+//       .compareTo(image2)
+//       .onComplete((data) => {
+//         resolve(data.misMatchPercentage);
+//       });
+//   });
+// }
 
 const base64ToImageURl = async (base64Image) => {
   return new Promise((resolve) => {
@@ -115,44 +115,7 @@ autoButton.addEventListener("click", () => {
           try {
             curbase64Image = await blobToBase64(blob);
           } catch (error) {
-            console.error("error converting to base64:", error);
-            return;
-          }
-          //check if the image is the background image
-          const background = localStorage.getItem("background");
-          if (background) {
-            try {
-              const misMatchPercentage = await compareImages(
-                curbase64Image,
-                background
-              );
-              if (misMatchPercentage <= thresholdForBackgroundImage) {
-                console.log("Image is same as background image");
-                return;
-              }
-            } catch (error) {
-              console.error("error in comparing images:", error);
-              return;
-            }
-          }
-
-          const previousImageBase64 = localStorage.getItem("previousImage");
-          if (previousImageBase64) {
-            try {
-              const misMatchPercentage = await compareImages(
-                curbase64Image,
-                previousImageBase64
-              );
-              if (misMatchPercentage <= thresholdForFacialRec) {
-                console.log("Image is same as previous image");
-                return;
-              } else {
-                console.log("Image is different from previous image");
-              }
-            } catch (error) {
-              console.error("error in comparing images:", error);
-              return;
-            }
+            console.error("error in transfer to base 64:", error);
           }
 
           //check if face inside the image
@@ -180,7 +143,7 @@ autoButton.addEventListener("click", () => {
         `image/jpeg`,
         0.95
       );
-    }, 2000); // take photo every 2 sec
+    }, 3000); // take photo every 2 sec
   } else {
     // Stop auto capturing
     autoCapturing = false;
