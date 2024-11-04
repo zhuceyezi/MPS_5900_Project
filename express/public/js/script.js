@@ -1,6 +1,6 @@
 const video = document.getElementById("video");
 const photo = document.getElementById("photo");
-const captureButton = document.getElementById("capture");
+//const captureButton = document.getElementById("capture");
 const employeeInfoDiv = document.getElementById("employee-info");
 //const uploadButton = document.getElementById('upload');
 const canvas = document.createElement("canvas"); // Create a canvas dynamically
@@ -9,7 +9,7 @@ const thresholdForFacialRec = 20; // Threshold for facial image difference
 const thresholdForBackgroundImage = 1; // Threshold for background image difference
 
 //automation button
-const autoButton = document.getElementById("auto-capture");
+//const autoButton = document.getElementById("auto-capture");
 let autoCapturing = false;
 let captureInterval;
 
@@ -29,29 +29,59 @@ async function loadFaceApiModels() {
 
 window.onload = async () => {
   await loadFaceApiModels();
+
+  // Start auto capturing when the page loads
+  startAutoCapture();
 };
 
-// Capture the photo from the live camera feed
-captureButton.addEventListener("click", () => {
-  const context = canvas.getContext("2d");
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+// function to start auto capturing when the page loads
+function startAutoCapture() {
+  autoCapturing = true;
 
-  // convert canvas to blob and send to api
-  canvas.toBlob(
-    async (blob) => {
-      try {
-        const base64Image = await blobToBase64(blob);
-        localStorage.setItem("background", base64Image);
-      } catch (error) {
-        console.error("error image:", error);
-      }
-    },
-    `image/jpeg`,
-    0.95
-  );
-});
+  // Set interval to capture photo every 2 seconds
+  captureInterval = setInterval(() => {
+    const context = canvas.getContext("2d");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Convert canvas to blob and send to API
+    canvas.toBlob(
+      async (blob) => {
+        let curbase64Image = null;
+        try {
+          curbase64Image = await blobToBase64(blob);
+        } catch (error) {
+          console.error("Error in transfer to base 64:", error);
+        }
+
+        // Check if face inside the image
+        try {
+          const faceDetected = await detectFace(curbase64Image);
+          if (!faceDetected) {
+            console.log("There is no human face in the image");
+            return;
+          } else {
+            console.log("Face detected");
+          }
+        } catch (error) {
+          console.error("Error in detecting face:", error);
+          return;
+        }
+
+        localStorage.setItem("previousImage", curbase64Image);
+        try {
+          console.log("Sending image to API...");
+          await sendImageToAPI(blob);
+        } catch (error) {
+          console.error("Error sending image:", error);
+        }
+      },
+      `image/jpeg`,
+      0.95
+    );
+  }, 3000); // Take photo every 3 seconds
+}
 
 // Function to convert blob to base64
 function blobToBase64(blob) {
@@ -63,6 +93,40 @@ function blobToBase64(blob) {
     reader.readAsDataURL(blob);
   });
 }
+
+// // Capture the photo from the live camera feed
+// captureButton.addEventListener("click", () => {
+//   const context = canvas.getContext("2d");
+//   canvas.width = video.videoWidth;
+//   canvas.height = video.videoHeight;
+//   context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+//   // convert canvas to blob and send to api
+//   canvas.toBlob(
+//     async (blob) => {
+//       try {
+//         const base64Image = await blobToBase64(blob);
+//         localStorage.setItem("background", base64Image);
+//       } catch (error) {
+//         console.error("error image:", error);
+//       }
+//     },
+//     `image/jpeg`,
+//     0.95
+//   );
+// });
+
+// // Function to convert blob to base64
+// function blobToBase64(blob) {
+//   const reader = new FileReader();
+//   return new Promise((resolve) => {
+//     reader.onloadend = () => {
+//       resolve(reader.result);
+//     };
+//     reader.readAsDataURL(blob);
+//   });
+// }
+
 //return the percentage of difference between two images
 // function compareImages(image1, image2) {
 //   //console.log(image1, image2);
@@ -75,13 +139,13 @@ function blobToBase64(blob) {
 //   });
 // }
 
-const base64ToImageURl = async (base64Image) => {
-  return new Promise((resolve) => {
-    const image = new Image();
-    image.src = base64Image;
-    image.onload = () => resolve(image);
-  });
-};
+// const base64ToImageURl = async (base64Image) => {
+//   return new Promise((resolve) => {
+//     const image = new Image();
+//     image.src = base64Image;
+//     image.onload = () => resolve(image);
+//   });
+// };
 
 //check if there is a face in the image using face-api.js a trained model runs on browser
 const detectFace = async (base64Image) => {
@@ -94,76 +158,72 @@ const detectFace = async (base64Image) => {
   return facesInImage.length > 0;
 };
 
-//Auto capture event listener
-autoButton.addEventListener("click", () => {
-  if (!autoCapturing) {
-    // Start auto capturing
-    autoCapturing = true;
-    autoButton.textContent = "Stop Auto Capture"; // Change button text
+// // //Auto capture event listener
+// autoButton.addEventListener("click", () => {
+//   if (!autoCapturing) {
+//     // Start auto capturing
+//     autoCapturing = true;
+//     autoButton.textContent = "Stop Auto Capture"; // Change button text
 
-    // Set interval to capture photo every 2 sec
-    captureInterval = setInterval(() => {
-      const context = canvas.getContext("2d");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+//     // Set interval to capture photo every 2 sec
+//     captureInterval = setInterval(() => {
+//       const context = canvas.getContext("2d");
+//       canvas.width = video.videoWidth;
+//       canvas.height = video.videoHeight;
+//       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      // convert canvas to blob and send to api
-      canvas.toBlob(
-        async (blob) => {
-          let curbase64Image = null;
-          try {
-            curbase64Image = await blobToBase64(blob);
-          } catch (error) {
-            console.error("error in transfer to base 64:", error);
-          }
+//       // convert canvas to blob and send to api
+//       canvas.toBlob(
+//         async (blob) => {
+//           let curbase64Image = null;
+//           try {
+//             curbase64Image = await blobToBase64(blob);
+//           } catch (error) {
+//             console.error("error in transfer to base 64:", error);
+//           }
 
-          //check if face inside the image
-          try {
-            const faceDetected = await detectFace(curbase64Image);
-            if (!faceDetected) {
-              console.log("there is no human face in the image");
-              return;
-            } else {
-              console.log("face detected");
-            }
-          } catch (error) {
-            console.error("error in detecting face:", error);
-            return;
-          }
+//           //check if face inside the image
+//           try {
+//             const faceDetected = await detectFace(curbase64Image);
+//             if (!faceDetected) {
+//               console.log("there is no human face in the image");
+//               return;
+//             } else {
+//               console.log("face detected");
+//             }
+//           } catch (error) {
+//             console.error("error in detecting face:", error);
+//             return;
+//           }
 
-          localStorage.setItem("previousImage", curbase64Image);
-          try {
-            console.log("Sending image to API...");
-            await sendImageToAPI(blob);
-          } catch (error) {
-            console.error("error image:", error);
-          }
-        },
-        `image/jpeg`,
-        0.95
-      );
-    }, 3000); // take photo every 2 sec
-  } else {
-    // Stop auto capturing
-    autoCapturing = false;
-    autoButton.textContent = "Take Photo Every 2s"; // Reset button text
-    clearInterval(captureInterval);
-  }
-});
+//           localStorage.setItem("previousImage", curbase64Image);
+//           try {
+//             console.log("Sending image to API...");
+//             await sendImageToAPI(blob);
+//           } catch (error) {
+//             console.error("error image:", error);
+//           }
+//         },
+//         `image/jpeg`,
+//         0.95
+//       );
+//     }, 3000); // take photo every 2 sec
+//   } else {
+//     // Stop auto capturing
+//     autoCapturing = false;
+//     autoButton.textContent = "Take Photo Every 2s"; // Reset button text
+//     clearInterval(captureInterval);
+//   }
+// });
 
 // Convert canvas to image and display in the img element
-// const dataURL = canvas.toDataURL("image/png");
-// photo.src = dataURL;
-
-// Upload image
-//     const base64Image = photo.src;
-//     if (base64Image) {
-//         sendImageToAPI(base64Image);
-//     } else {
-//         console.log("No image to upload");
-//     }
-// });
+const base64ToImageURl = async (base64Image) => {
+  return new Promise((resolve) => {
+    const image = new Image();
+    image.src = base64Image;
+    image.onload = () => resolve(image);
+  });
+};
 
 // Upload button event listener
 /*uploadButton.addEventListener('click', () => {
@@ -217,7 +277,7 @@ async function sendImageToAPI(imageBlob) {
       //store info for next page
       sessionStorage.setItem("employeeData", JSON.stringify(employeeData));
       // Redirect to the employee info page
-      // window.location.href = "success.html"; //temp disable for testing autocapture
+      window.location.href = "success.html"; //temp disable for testing autocapture
     } else {
       // alert("Facial recognition failed. Please try again."); //temp disable for testing autocapture
       console.error("Facial recognition failed:", response.statusText);
