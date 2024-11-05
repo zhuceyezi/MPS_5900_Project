@@ -1,52 +1,65 @@
-const problemInput = document.getElementById('problem');
-const charCount = document.getElementById('charCount');
-const feedbackForm = document.getElementById('feedbackForm');
-const successPopup = document.getElementById('successPopup');
-const countdownElement = document.getElementById('countdown');
+const form = document.getElementById("feedbackForm");
+const charCount = document.getElementById("charCount");
+const textarea = document.getElementById("problem");
+const popup = document.getElementById("successPopup");
+const countdownEl = document.getElementById("countdown");
 
-problemInput.addEventListener('input', () => {
-    charCount.textContent = `${problemInput.value.length}/420`;
+textarea.addEventListener("input", () => {
+    charCount.textContent = `${textarea.value.length}/500`;
 });
 
-feedbackForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
 
-    // Collect form data
-    const formData = {
-        name: document.getElementById('name').value,
-        id: document.getElementById('id').value,
-        problem: problemInput.value
-    };
-
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    const employeeID = document.getElementById("id").value;
+    const employeeName = document.getElementById("name").value;
+    const content = document.getElementById("problem").value;
+    formData.append("employeeId", employeeID);
+    formData.append("employeeName", employeeName);
+    formData.append("content", content);
+    
+    console.log(employeeID); // Should log the element or null
+    console.log(employeeName); // Should log the element or null
+    console.log(content); // Should log the element or null
     try {
-        // Send the data to the server (adjust the URL to your backend endpoint)
-        const response = await fetch('/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-            // Show the success popup
-            successPopup.style.display = 'block';
-
-            // Start the countdown and redirect after 3 seconds
-            let countdown = 3;
-            const interval = setInterval(() => {
-                countdown -= 1;
-                countdownElement.textContent = countdown;
-                if (countdown === 0) {
-                    clearInterval(interval);
-                    window.location.href = "1.Main Page.html"; // Redirect to the main page
-                }
-            }, 1000);
+        const response = await fetch(
+            "http://localhost:3000/employees/addFeedback",
+            {
+                method: "POST",
+                // headers: {"Content-Type": "application/json"},
+                body: formData
+            }
+        );
+        
+        console.log("Response received:", response);
+        
+        if (response.status === 201) {
+            showPopup();
+            form.reset();
+            charCount.textContent = "0/500";
         } else {
-            alert('Failed to submit feedback. Please try again.');
+            console.error("Error in submission. Response status:", response.status);
+            alert("There was an error submitting your feedback. Please try again.");
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        console.error("Error:", error);
+        alert("Could not submit feedback.");
     }
 });
+
+function showPopup() {
+    popup.style.display = "block";
+    let countdown = 3;
+    countdownEl.textContent = countdown;
+    const interval = setInterval(() => {
+        countdown -= 1;
+        countdownEl.textContent = countdown;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            popup.style.display = "none";
+            window.location.href = "index.html"; // Redirect to the main page
+        }
+    }, 1000);
+}
