@@ -16,7 +16,7 @@ form.addEventListener("submit", async (e) => {
     const employeeID = document.getElementById("id").value;
     const employeeName = document.getElementById("name").value;
     const content = document.getElementById("problem").value;
-    formData.append("employeeID", employeeID);
+    formData.append("employeeId", employeeID);
     formData.append("employeeName", employeeName);
     formData.append("content", content);
     
@@ -35,7 +35,7 @@ form.addEventListener("submit", async (e) => {
         
         console.log("Response received:", response);
         
-        if (response.status === 400) {
+        if (response.status === 201) {
             showPopup();
             form.reset();
             charCount.textContent = "0/500";
