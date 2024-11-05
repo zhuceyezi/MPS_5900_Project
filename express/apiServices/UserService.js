@@ -192,6 +192,23 @@ class UserService {
             return false;
         }
     }
+    
+    async verifyEmployee({employeeId, employeeName}) {
+        try {
+            const employee = await this.Employee.findOne({
+                                                             where: {
+                                                                 [Op.and]: [
+                                                                     {employeeId: employeeId},
+                                                                     {employeeName: employeeName}
+                                                                 ]
+                                                             }
+                                                         });
+            return employee !== null;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
 }
 
 

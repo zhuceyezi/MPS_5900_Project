@@ -58,7 +58,7 @@ class UserController {
     async addFeedback(req, res) {
         try {
             const body = req.body;
-            const employeeId = body.employeeId;
+            const employeeId = body.employeeID;
             const employeeName = body.employeeName;
             const feedback = body.content;
             if (employeeId === undefined || employeeName === undefined) {
@@ -69,6 +69,22 @@ class UserController {
                 throw new Error("addFeedback failed");
             }
             return res.status(201).json({message: "Feedback added"});
+        } catch (e) {
+            console.log(e);
+            return res.status(500).json({message: "Internal server error"});
+        }
+    }
+    
+    async verifyEmployee(req, res) {
+        try {
+            const employeeId = req.query.employeeId;
+            const employeeName = req.query.employeeName;
+            if (employeeId === undefined || employeeName === undefined) {
+                return res.status(400).json({message: "employeeId or employeeName not found in request query"});
+            }
+            const verifyResult = await this.userServices.verifyEmployee({employeeId, employeeName});
+            if (verifyResult) return res.status(200).json({message: "Employee verified"});
+            return res.status(404).json({message: "Employee not found"});
         } catch (e) {
             console.log(e);
             return res.status(500).json({message: "Internal server error"});
