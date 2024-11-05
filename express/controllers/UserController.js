@@ -58,7 +58,7 @@ class UserController {
     async addFeedback(req, res) {
         try {
             const body = req.body;
-            const employeeId = body.employeeID;
+            const employeeId = body.employeeId;
             const employeeName = body.employeeName;
             const feedback = body.content;
             if (employeeId === undefined || employeeName === undefined) {
