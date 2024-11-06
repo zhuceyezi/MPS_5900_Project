@@ -13,14 +13,14 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
     
     const formData = new FormData();
-    const employeeID = document.getElementById("id").value;
+    const employeeId = document.getElementById("id").value;
     const employeeName = document.getElementById("name").value;
     const content = document.getElementById("problem").value;
-    formData.append("employeeId", employeeID);
+    formData.append("employeeId", employeeId);
     formData.append("employeeName", employeeName);
     formData.append("content", content);
     
-    console.log(employeeID); // Should log the element or null
+    console.log(employeeId); // Should log the element or null
     console.log(employeeName); // Should log the element or null
     console.log(content); // Should log the element or null
     try {
@@ -28,7 +28,6 @@ form.addEventListener("submit", async (e) => {
             "http://localhost:3000/employees/addFeedback",
             {
                 method: "POST",
-                // headers: {"Content-Type": "application/json"},
                 body: formData
             }
         );
