@@ -16,7 +16,7 @@
 }
 
 main {
-    padding-top: 120px;
+    padding-top: 80px;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -68,15 +68,23 @@ button {
     margin: 5px;
 }
 
-#regcapture, #retake {
-    position: absolute; /* Position both buttons absolutely */
-    left: 40%;          /* Center horizontally */
+/* Container for buttons on registration page */
+.registerbutton-container {
+    display: flex;                  
+    justify-content: center;        
+    gap: 10px;                      
+    margin-top: 20px;               
+}
+
+/* Individual button styling */
+#regcapture, #retake, #submit { 
+    position: static;
+    flex: 1;                        /* 使按钮平分空间 */         
+    max-width: 130px;    
 }
 
 #submit{
     background-color: gray;
-    position: absolute; /* Position both buttons absolutely */
-    left: 55%;  
 }
 
 #submit.active {
@@ -84,12 +92,12 @@ button {
     cursor: pointer; /* 激活状态允许点击 */
 }
 
-
 #retake{
     background-color: #82bcfa;
     color: black;
+    display: none; /* 初始状态隐藏 */ 
 }
-
+/* Container for buttons on registration page END*/
 
 .user-image {
     max-width: 100%; /* 确保图片适应宽度 */
@@ -122,6 +130,7 @@ button {
     color: #fff;
 }
 
+/* Help Button */
 .help-button {
     display: flex; /* 使用 Flexbox 使内容在同一行 */
     align-items: center; /* 垂直居中对齐 */
@@ -145,11 +154,22 @@ button {
     color: #fff;
 }
 
+/* 使用 media query 在小屏幕时调整按钮 */
+@media (max-width: 600px) {
+    .help-button {
+        bottom: 10px;              /* 增加底部空间 */
+        right: 10px;               /* 增加右边空间 */
+        font-size: 16px;           /* 缩小字体 */
+        padding: 4px 8px;          /* 缩小按钮内边距 */
+    }
+}
+
 .buttonicon {
     width: 20px; /* 设置更小的宽度 */
     height: auto; /* 高度自动调整，保持宽高比 */
     margin-right: 5px; /* 添加右侧间距，使图标与文本有距离 */
 }
+/* Help Button END */
 
 .container {
     background-color: #d3d3d3;
