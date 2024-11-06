@@ -209,6 +209,34 @@ class UserService {
             return false;
         }
     }
+    
+    async deleteEmployee({employeeId, employeeName}) {
+        try {
+            const employee = await this.Employee.findOne({
+                                                             where: {
+                                                                 [Op.and]: [
+                                                                     {employeeId: employeeId},
+                                                                     {employeeName: employeeName}
+                                                                 ]
+                                                             }
+                                                         });
+            if (employee === null) {
+                throw new Error("Employee not found");
+            }
+            await this.Employee.destroy({
+                                            where: {
+                                                [Op.and]: [
+                                                    {employeeId: employeeId},
+                                                    {employeeName: employeeName}
+                                                ]
+                                            }
+                                        })
+            return true;
+        } catch (e) {
+            console.error(e);
+            return false;
+        }
+    }
 }
 
 

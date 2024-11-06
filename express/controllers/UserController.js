@@ -1,6 +1,7 @@
 class UserController {
-    constructor(userServices) {
+    constructor(userServices, facialRecService) {
         this.userServices = userServices;
+        this.facialRecService = facialRecService;
     }
     
     //field data should be in the request body as json
@@ -19,21 +20,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error"});
-        }
-    }
-    
-    //the name should be delivered as request parameter
-    async deleteEmployeeByName(req, res) {
-        try {
-            const name = req.params.name;
-            if (name === undefined) return res.status(400).json({message: "Bad request"});
-            const deleteResult = await this.userServices.deleteEmployeeByName(name);
-            if (deleteResult) return res.status(200).json({message: "Employee deleted"});
-            return res.status(404).json({message: "Employee not found"});
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error: " + e});
         }
     }
     
@@ -51,7 +38,7 @@ class UserController {
             return res.status(404).json({message: "Employee not found"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error: " + e});
         }
     }
     
@@ -71,7 +58,7 @@ class UserController {
             return res.status(201).json({message: "Feedback added"});
         } catch (e) {
             console.log(e);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error: " + e});
         }
     }
     
@@ -87,7 +74,30 @@ class UserController {
             return res.status(404).json({message: "Employee not found"});
         } catch (e) {
             console.log(e);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error: " + e});
+        }
+    }
+    
+    async deleteEmployee(req, res) {
+        try {
+            const body = req.body;
+            const employeeId = body.employeeId;
+            const employeeName = body.employeeName;
+            if (employeeId === undefined || employeeName === undefined) {
+                return res.status(400).json({message: "employeeId or employeeName not found in request query"});
+            }
+            const deleteResult = await this.userServices.deleteEmployee({employeeId, employeeName});
+            if (!deleteResult) {
+                return res.status(500).json({message: "error in deleting employee"});
+            }
+            const deleteFaceResult = await this.facialRecService.deleteFace(employeeId);
+            if (!deleteFaceResult) {
+                return res.status(500).json({message: "error in deleting face from collection"});
+            }
+            return res.status(200).json({message: "Employee deleted"});
+        } catch (e) {
+            console.log(e);
+            return res.status(500).json({message: "Internal server error: " + e});
         }
     }
 }

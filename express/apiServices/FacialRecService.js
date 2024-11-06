@@ -66,6 +66,20 @@ class FacialRecService {
         }
     }
     
+    async deleteFace(collectionId, faceId) {
+        try {
+            const ok = await this.awsService.deleteFace(collectionId, faceId);
+            if (!ok) {
+                console.error("Error in deleting face from collection");
+                return false;
+            }
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false
+        }
+    }
+    
     /**
      * Recognizes an employee based on an image.
      * @param {string} collectionId - The collection ID.

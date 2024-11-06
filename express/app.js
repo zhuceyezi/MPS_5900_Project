@@ -27,7 +27,7 @@ database
     .authenticate()
     .then(() => {
         database
-            .sync()
+            .sync({alter: true})
             .then(() => {
                 console.log("successful connect to database and sync the schemas");
             })
@@ -43,7 +43,7 @@ database
 
 
 app.use("/", indexRouter);
-app.use("/employees", userRouter(userController, userServices, upload, models));
+app.use("/employees", userRouter(userController, userServices, awsService, facialRecService, upload, models));
 
 const collectionId = process.env.COLLECTION_ID;
 app.use("/facial",
