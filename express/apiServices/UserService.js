@@ -9,8 +9,7 @@ class UserService {
      * @param models - The DB models.
      */
     constructor(models) {
-        this.Employee = models.Employee;
-        this.Feedback = models.Feedback;
+        this.models = models;
     }
     
     /**
@@ -39,7 +38,7 @@ class UserService {
                 lastLogin: new Date(),
                 employeeId: employeeId
             };
-            await this.Employee.create(values, options);
+            await this.models.Employee.create(values, options);
             return true;
         } catch (error) {
             console.error(error);
@@ -73,7 +72,7 @@ class UserService {
                 lastLogin: new Date(),
                 employeeId: employeeId
             };
-            const employee = await this.Employee.create(values, options);
+            const employee = await this.models.Employee.create(values, options);
             return employee.key;
         } catch (error) {
             console.error(error);
@@ -83,11 +82,11 @@ class UserService {
     
     /**
      * Gets an employee by ID.
-     * @param {string} employeeId - The employee ID.
+     * @param {string} employeeKey - The employee Key.
      * @returns {Promise<Object|null>} - The employee object if found, null otherwise.
      */
     async getEmployeeByKey(employeeKey) {
-        return await this.Employee.findOne({where: {key: employeeKey}});
+        return await this.models.Employee.findOne({where: {key: employeeKey}});
     }
     
     /**
@@ -98,11 +97,11 @@ class UserService {
     async deleteEmployeeByName(name) {
         try {
             console.debug(`Deleting Employee: ${name}`);
-            const deleteNumber = await this.Employee.destroy({
-                                                                 where: {
-                                                                     employeeName: name
-                                                                 }
-                                                             });
+            const deleteNumber = await this.models.Employee.destroy({
+                                                                        where: {
+                                                                            employeeName: name
+                                                                        }
+                                                                    });
             return deleteNumber > 0;
         } catch (error) {
             console.error(error);
@@ -138,7 +137,7 @@ class UserService {
             if (employeeId === undefined) {
                 throw new Error(`employeeId should be defined`);
             }
-            const resultArray = await this.Employee.update(
+            const resultArray = await this.models.Employee.update(
                 {
                     lastLogin: lastLogin,
                     employeeName: employeeName,
@@ -167,46 +166,133 @@ class UserService {
      * @param {string} params.employeeName - The employee name.
      * @param {string} params.feedback - The feedback content.
      * @param {Object} options - Additional options as json for model.create() method for sequelize.
-     * @returns {Promise<boolean>} - True if the feedback was added successfully, false otherwise.
+     * @returns {Promise<{result: boolean, error}>} - True if the feedback was added successfully, false otherwise.
      */
     async addFeedback({employeeId, employeeName, feedback}, options = {}) {
         try {
-            const employee = await this.Employee.findOne({
-                                                             where: {
-                                                                 [Op.and]: [
-                                                                     {employeeId: employeeId},
-                                                                     {employeeName: employeeName}
-                                                                 ]
-                                                             }
-                                                         });
+            const employee = await this.models.Employee.findOne({
+                                                                    where: {
+                                                                        [Op.and]: [
+                                                                            {employeeId: employeeId},
+                                                                            {employeeName: employeeName}
+                                                                        ]
+                                                                    }
+                                                                });
             if (employee === null) {
-                throw new Error("Employee not found");
+                return {result: false, error: "Employee not found"};
             }
-            await this.Feedback.create({
-                                           content: feedback,
-                                           employeeKey: employee.key
-                                       }, options);
-            return true;
+            await this.models.Feedback.create({
+                                                  content: feedback,
+                                                  employeeKey: employee.key
+                                              }, options);
+            return {result: true};
         } catch (e) {
             console.error(e);
-            return false;
+            return {result: false, error: e};
+        }
+    }
+    
+    async #getEmployee({employeeId, employeeName}) {
+        try {
+            return await this.models.Employee.findOne({
+                                                          where: {
+                                                              [Op.and]: [
+                                                                  {employeeId: employeeId},
+                                                                  {employeeName: employeeName}
+                                                              ]
+                                                          }
+                                                      });
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
+    }
+    
+    async getFaceId({employeeId, employeeName}) {
+        try {
+            const employee = await this.#getEmployee({employeeId, employeeName});
+            if (employee === null) {
+                return null;
+            }
+            const mappingRecord = await this.models.UserFaceMapping.findOne({
+                                                                                where: {
+                                                                                    employeeKey: employee.key
+                                                                                }
+                                                                            })
+            return mappingRecord.faceId;
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
+    }
+    
+    async #getImageId(employeeId, employeeName) {
+        try {
+            const employee = await this.#getEmployee(employeeId, employeeName);
+            if (employee === null) {
+                return null;
+            }
+            const mappingRecord = await this.models.UserFaceMapping.findOne({
+                                                                                where: {
+                                                                                    employeeKey: employee.key
+                                                                                }
+                                                                            })
+            return mappingRecord.imageId;
+        } catch (e) {
+            console.error(e);
+            return null;
         }
     }
     
     async verifyEmployee({employeeId, employeeName}) {
         try {
-            const employee = await this.Employee.findOne({
-                                                             where: {
-                                                                 [Op.and]: [
-                                                                     {employeeId: employeeId},
-                                                                     {employeeName: employeeName}
-                                                                 ]
-                                                             }
-                                                         });
-            return employee !== null;
+            const employee = await this.models.Employee.findOne({
+                                                                    where: {
+                                                                        [Op.and]: [
+                                                                            {employeeId: employeeId},
+                                                                            {employeeName: employeeName}
+                                                                        ]
+                                                                    }
+                                                                });
+            if (employee !== null) {
+                return {result: true}
+            }
+            return {result: false, error: "Employee not found"};
         } catch (e) {
             console.error(e);
-            return false;
+            return {result: false, error: e};
+        }
+    }
+    
+    async deleteEmployee({employeeId, employeeName}) {
+        const transaction = await this.models.Employee.sequelize.transaction();
+        try {
+            const employee = await this.models.Employee.findOne({
+                                                                    where: {
+                                                                        [Op.and]: [
+                                                                            {employeeId: employeeId},
+                                                                            {employeeName: employeeName}
+                                                                        ]
+                                                                    }
+                                                                });
+            if (employee === null) {
+                throw new Error("Employee not found");
+            }
+            await this.models.Employee.destroy({
+                                                   where: {
+                                                       [Op.and]: [
+                                                           {employeeId: employeeId},
+                                                           {employeeName: employeeName}
+                                                       ]
+                                                   },
+                                                   transaction
+                                               })
+            await transaction.commit();
+            return {result: true};
+        } catch (e) {
+            await transaction.rollback();
+            console.error(e);
+            return {result: false, error: e};
         }
     }
 }

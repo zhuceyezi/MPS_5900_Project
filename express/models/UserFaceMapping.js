@@ -9,6 +9,7 @@ const UserFaceMapping = database.define('UserFaceMapping', {
             model: 'Employee',
             key: 'key'
         },
+        onDelete: 'CASCADE',
         unique: true
     },
     faceId: {
