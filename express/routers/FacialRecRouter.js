@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (UserService, AwsService, models, FacialRecService,
-                  FacialRecController,
-                  upLoad,
-                  collectionId) => {
-    const userServiceInstance = new UserService(models);
-    const awsServiceInstance = new AwsService();
-    const facialRecService = new FacialRecService(userServiceInstance, awsServiceInstance, models);
-    const facialRecController = new FacialRecController(facialRecService, collectionId);
+module.exports = (userService, awsService, facialRecService,
+                  facialRecController,
+                  upLoad) => {
     //POST /employees
     router.post('/', (req, res, next) => {
         upLoad.single('image')(req, res, (err) => {

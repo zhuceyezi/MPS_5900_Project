@@ -8,14 +8,14 @@ const database = models.database;
 class FacialRecService {
     /**
      * Creates an instance of FacialRecService.
-     * @param {Object} userServices - The user services instance.
+     * @param userService
      * @param {Object} awsService - The AWS service instance.
      * @param models - The DB models.
      */
-    constructor(userServices, awsService, models) {
-        this.userServices = userServices;
+    constructor(userService, awsService, models) {
+        this.userService = userService;
         this.awsService = awsService;
-        this.UserFaceMapping = models.UserFaceMapping;
+        this.models = models
     }
     
     /**
@@ -28,21 +28,21 @@ class FacialRecService {
      * @returns {Promise<boolean>} - True if the employee was added successfully, false otherwise.
      */
     async addEmployee({employeeId, employeeName, imageBuffer, collectionId}) {
-        console.log(this.userServices);
+        console.log(this.userService);
         const trans = await database.transaction();
         try {
             console.debug(employeeId, employeeName, imageBuffer, collectionId);
-            const employeeResult = await this.userServices.addEmployeeReturnUserId({employeeId, employeeName},
-                                                                                   {transaction: trans});
-            const [faceId, imageId] = await this.awsService.indexFaces(collectionId, imageBuffer);
+            const employeeResult = await this.userService.addEmployeeReturnUserId({employeeId, employeeName},
+                                                                                  {transaction: trans});
+            const [faceId, imageId] = await this.awsService.indexFaces(collectionId, imageBuffer, employeeName);
             if (faceId === undefined || imageId === undefined || employeeResult === -1) {
                 console.log("Error in adding employee");
                 await trans.rollback();
                 return false;
             }
             console.log(imageId, faceId);
-            await this.UserFaceMapping.create({employeeKey: employeeResult, imageId: imageId, faceId: faceId},
-                                              {transaction: trans});
+            await this.models.UserFaceMapping.create({employeeKey: employeeResult, imageId: imageId, faceId: faceId},
+                                                     {transaction: trans});
             await trans.commit();
             return true;
         } catch (error) {
@@ -66,17 +66,23 @@ class FacialRecService {
         }
     }
     
-    async deleteFace(collectionId, faceId) {
+    async deleteFace({employeeId, employeeName}) {
         try {
-            const ok = await this.awsService.deleteFace(collectionId, faceId);
-            if (!ok) {
-                console.error("Error in deleting face from collection");
-                return false;
+            const collectionId = process.env.COLLECTION_ID;
+            const faceId = await this.userService.getFaceId({employeeId, employeeName})
+            console.log(faceId);
+            if (faceId === null || faceId.length === 0) {
+                return {result: false, error: "No face associated with that employee was found."};
             }
-            return true;
+            const deleteResult = await this.awsService.deleteFaces(collectionId, [faceId]);
+            if (!deleteResult.result) {
+                console.error(deleteResult.error);
+                return {result: false, error: deleteResult.error};
+            }
+            return {result: true};
         } catch (e) {
             console.log(e);
-            return false
+            return {result: false, error: e};
         }
     }
     
@@ -94,12 +100,12 @@ class FacialRecService {
                 return null;
             }
             // Search the user based on imageId
-            const mapping = await this.UserFaceMapping.findOne({where: {imageId: amazonImageId}, raw: true});
+            const mapping = await this.models.UserFaceMapping.findOne({where: {imageId: amazonImageId}, raw: true});
             console.log(mapping);
             if (mapping === null) {
                 return null;
             }
-            return await this.userServices.getEmployeeByKey(mapping.employeeKey);
+            return await this.userService.getEmployeeByKey(mapping.employeeKey);
         } catch (error) {
             console.error(error);
             return null;

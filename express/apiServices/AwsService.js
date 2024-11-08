@@ -201,9 +201,10 @@ class AwsService {
      * Indexes faces in an image buffer within a collection.
      * @param {string} collectionId - The ID of the collection.
      * @param {Buffer} imageBuffer - The image buffer.
+     * @param employeeName - The name of the employee.
      * @returns {Promise<string[]|undefined>} - [imageId, FaceId] if indexed, otherwise undefined.
      */
-    async indexFaces(collectionId, imageBuffer) {
+    async indexFaces(collectionId, imageBuffer, employeeName = null) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
             const params = {
@@ -213,6 +214,7 @@ class AwsService {
                     Bytes: imageBytesBuffer
                 },
                 MaxFaces: 1,
+                ExternalImageId: employeeName.replace(" ", "_"),
                 QualityFilter: null
             };
             const command = new IndexFacesCommand(params);
@@ -254,7 +256,7 @@ class AwsService {
      * Deletes faces from a collection.
      * @param {string} collectionId - The ID of the collection.
      * @param {string[]} faceIds - The list of face IDs to delete.
-     * @returns {Promise<boolean>} - True if faces are deleted, false otherwise.
+     * @returns {Promise<{result: boolean, error}>} - True if faces are deleted, false otherwise.
      */
     async deleteFaces(collectionId, faceIds) {
         try {
@@ -265,16 +267,13 @@ class AwsService {
             const command = new DeleteFacesCommand(params);
             const response = await this.client.send(command);
             console.log(JSON.stringify(response, null, 2));
-            return true;
+            return {result: true};
         } catch (e) {
             console.log(e);
-            return false;
+            return {result: false, error: e};
         }
     }
 }
 
 
 module.exports = AwsService;
-
-const aws = new AwsService();
-aws.listFaces(aws.collectionID).then(console.log("done"));

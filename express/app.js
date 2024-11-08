@@ -6,13 +6,13 @@ const logger = require("morgan");
 const indexRouter = require("./apiServices");
 const {database} = require("./models/models");
 const userRouter = require("./routers/userRouter");
-const userServices = require("./apiServices/UserService");
-const userController = require("./controllers/UserController");
+const UserServices = require("./apiServices/UserService");
+const UserController = require("./controllers/UserController");
 const models = require("./models/models");
 const upload = require("./config/multerSetUp");
-const facialRecService = require("./apiServices/FacialRecService");
-const facialRecController = require("./controllers/FacialRecController");
-const awsService = require("./apiServices/AwsService");
+const FacialRecService = require("./apiServices/FacialRecService");
+const FacialRecController = require("./controllers/FacialRecController");
+const AwsService = require("./apiServices/AwsService");
 const facialRecRouter = require("./routers/FacialRecRouter");
 const cors = require('cors');
 const app = express();
@@ -40,17 +40,19 @@ database
         console.log("error when connecting to database");
         console.log(err);
     });
-
-
+const awsService = new AwsService();
+const userServices = new UserServices(models);
+const facialRecService = new FacialRecService(userServices, awsService, models);
+const userController = new UserController(userServices, facialRecService);
+const facialRecController = new FacialRecController(facialRecService, process.env.COLLECTION_ID);
 app.use("/", indexRouter);
-app.use("/employees", userRouter(userController, userServices, awsService, facialRecService, upload, models));
+app.use("/employees", userRouter(userController, userServices, awsService, facialRecService, upload));
 
 const collectionId = process.env.COLLECTION_ID;
 app.use("/facial",
-        facialRecRouter(userServices, awsService, models, facialRecService,
+        facialRecRouter(userServices, awsService, facialRecService,
                         facialRecController,
-                        upload,
-                        collectionId));
+                        upload));
 
 
 module.exports = app;

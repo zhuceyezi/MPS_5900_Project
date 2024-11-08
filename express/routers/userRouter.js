@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (Controller, UserService, awsService, FacialRecService, upload, models) => {
-    const userService = new UserService(models);
-    const facialRecService = new FacialRecService(userService, awsService, models);
-    const userController = new Controller(userService, facialRecService);
+module.exports = (userController, userService, awsService, facialRecService, upload) => {
     
     //POST /employees
     router.post('/', (req, res) => userController.addEmployee(req, res));
