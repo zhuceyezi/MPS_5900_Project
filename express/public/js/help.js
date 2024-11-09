@@ -4,14 +4,22 @@ const textarea = document.getElementById("problem");
 const popup = document.getElementById("successPopup");
 const countdownEl = document.getElementById("countdown");
 
+/**
+ * Event listener for textarea input
+ * Updates character count display as user types
+ * Maximum character limit is 500
+ */
 textarea.addEventListener("input", () => {
     charCount.textContent = `${textarea.value.length}/500`;
 });
 
-
+/**
+ * Form submission event handler
+ * Handles the feedback submission process and displays success/error messages
+ */
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     const employeeId = document.getElementById("id").value;
     const employeeName = document.getElementById("name").value;
@@ -19,7 +27,7 @@ form.addEventListener("submit", async (e) => {
     formData.append("employeeId", employeeId);
     formData.append("employeeName", employeeName);
     formData.append("content", content);
-    
+
     console.log(employeeId); // Should log the element or null
     console.log(employeeName); // Should log the element or null
     console.log(content); // Should log the element or null
@@ -31,9 +39,9 @@ form.addEventListener("submit", async (e) => {
                 body: formData
             }
         );
-        
+
         console.log("Response received:", response);
-        
+
         if (response.status === 201) {
             showPopup();
             form.reset();
@@ -48,6 +56,12 @@ form.addEventListener("submit", async (e) => {
     }
 });
 
+/**
+ * Displays a success popup with countdown timer
+ * After countdown completes, redirects to index page
+ * @function showPopup
+ * @returns {void}
+ */
 function showPopup() {
     popup.style.display = "block";
     let countdown = 3;
