@@ -2,7 +2,7 @@
     width: 100%;
     text-align: center;
     padding: 10px 0;
-    position: fixed;  /*Fixes the header at the top of the page*/
+    position: fixed; /*Fixes the header at the top of the page*/
     top: 0;
     left: 0;
     background-color: #ffffff;
@@ -10,7 +10,7 @@
 }
 
 .logo {
-    height: 60px; 
+    height: 60px;
     width: auto;
     border: 0px;
 }
@@ -49,7 +49,7 @@ video {
     margin-bottom: 20px
 }
 
-#logo{
+#logo {
     margin-top: 20px;
     width: 300px;
     height: 225px;
@@ -70,48 +70,49 @@ button {
 
 /* Container for buttons on registration page */
 .registerbutton-container {
-    display: flex;                  
-    justify-content: center;        
-    gap: 10px;                      
-    margin-top: 20px;               
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 /* Individual button styling */
-#regcapture, #retake, #submit { 
+#regcapture, #retake, #submit {
     position: static;
-    flex: 1;                        /* 使按钮平分空间 */         
-    max-width: 130px;    
+    flex: 1;
+    max-width: 130px;
 }
 
-#submit{
+#submit {
     background-color: gray;
 }
 
 #submit.active {
-    background-color: #0056b3; /* 激活后为蓝色 */
-    cursor: pointer; /* 激活状态允许点击 */
+    background-color: #0056b3;
+    cursor: pointer;
 }
 
-#retake{
+#retake {
     background-color: #82bcfa;
     color: black;
-    display: none; /* 初始状态隐藏 */ 
+    display: none;
 }
-/* Container for buttons on registration page END*/
 
+/* Container for buttons on registration page */
 .user-image {
-    max-width: 100%; /* 确保图片适应宽度 */
+    max-width: 100%;
     height: auto;
 }
 
 .information-inline-container {
     display: inline-block;
-    align-items: center; /* 使容器内的内容在同一行显示 */
+    align-items: center;
     margin: 5px 0;
 }
+
 .textspace {
-    display: inline; /* 使 user-name 在同一行 */
-    margin-left: 5px; /* 添加一些左侧间距 */
+    display: inline;
+    margin-left: 5px;
 }
 
 .back-button {
@@ -125,6 +126,7 @@ button {
     text-decoration: none;
     font-size: 14px;
 }
+
 .back-button:hover {
     background-color: #2c4b8e;
     color: #fff;
@@ -132,8 +134,8 @@ button {
 
 /* Help Button */
 .help-button {
-    display: flex; /* 使用 Flexbox 使内容在同一行 */
-    align-items: center; /* 垂直居中对齐 */
+    display: flex;
+    align-items: center;
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -154,23 +156,25 @@ button {
     color: #fff;
 }
 
-/* 使用 media query 在小屏幕时调整按钮 */
+/* media query to adjust space for display below 600px */
 @media (max-width: 600px) {
     .help-button {
-        bottom: 10px;              /* 增加底部空间 */
-        right: 10px;               /* 增加右边空间 */
-        font-size: 16px;           /* 缩小字体 */
-        padding: 4px 8px;          /* 缩小按钮内边距 */
+        bottom: 10px;
+        right: 10px;
+        font-size: 16px;
+        padding: 4px 8px;
     }
 }
 
 .buttonicon {
-    width: 20px; /* 设置更小的宽度 */
-    height: auto; /* 高度自动调整，保持宽高比 */
-    margin-right: 5px; /* 添加右侧间距，使图标与文本有距离 */
+    width: 20px;
+    height: auto;
+    margin-right: 5px;
 }
+
 /* Help Button END */
 
+/* accountlogin page */
 .container {
     background-color: #d3d3d3;
     padding: 40px;
@@ -178,20 +182,24 @@ button {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 500px;
     text-align: center;
-    
+
 }
+
 .container h2 {
     margin-bottom: 20px;
 }
+
 .login-group {
     margin-bottom: 15px;
     text-align: left;
 }
+
 .login-group label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
+
 .login-group input {
     width: 100%;
     padding: 10px;
@@ -200,15 +208,21 @@ button {
     box-sizing: border-box;
 }
 
+/* accountlogin page END*/
+
+
+/* help page */
 .report-group {
     margin-bottom: 15px;
     text-align: left;
 }
+
 .report-group label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
+
 .report-group input, .report-group textarea {
     width: 100%;
     padding: 10px;
@@ -244,6 +258,7 @@ button {
     margin-top: 10px;
     font-size: 16px;
 }
+
 .submit-button:hover {
     background-color: #1f3665;
 }
@@ -271,4 +286,6 @@ button {
     transform: translate(-50%, -50%);
     z-index: 1000;
 }
+
+/* help page END*/
 
