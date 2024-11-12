@@ -43,6 +43,9 @@ class UserService {
             };
             const getModel = options.returning !== undefined;
             const employee = await this.models.Employee.create(values, options);
+            if (employee === null || typeof employee !== 'object') {
+                return {result: false, error: "error when creating employee"}
+            }
             return getModel ? {result: true, model: employee} : {result: true};
         } catch (error) {
             console.error(error);

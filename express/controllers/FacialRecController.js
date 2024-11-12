@@ -15,13 +15,14 @@ class FacialRecController {
             }
             const addResult = await this.facialRecService.addEmployee(
                 {employeeId, employeeName, imageBuffer});
-            if (addResult === false) {
-                return res.status(500).json({message: "Internal server error: addEmployee failed"});
+            if (!addResult) {
+                return res.status(500)
+                          .json({message: "Internal server error: addEmployee failed" + addResult.error.toString()});
             }
-            return res.status(201).json(addResult);
+            return res.status(201).json("Employee added");
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error: " + err});
+            return res.status(500).json({message: "Internal server error: " + err.toString()});
         }
     }
     
@@ -37,7 +38,7 @@ class FacialRecController {
             return res.status(200).json(employee);
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error" + err.toString()});
         }
     }
     
@@ -51,7 +52,7 @@ class FacialRecController {
             return res.status(200).json({message: "All faces deleted"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error" + err.toString()});
         }
     }
     

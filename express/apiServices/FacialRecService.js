@@ -64,7 +64,6 @@ class FacialRecService {
     
     /**
      * Deletes all faces in a collection.
-     * @param {string} collectionId - The collection ID.
      * @returns {Promise<{result: boolean, error}>} - True if all faces were deleted successfully, false otherwise.
      */
     async deleteAllFaces() {
@@ -76,6 +75,12 @@ class FacialRecService {
         }
     }
     
+    /**
+     * Deletes a face associated with an employee
+     * @param employeeId
+     * @param employeeName
+     * @returns {Promise<{result: boolean, error}|{result: boolean}|{result: boolean, error: string}>}
+     */
     async deleteFace({employeeId, employeeName}) {
         try {
             const collectionId = process.env.COLLECTION_ID;
