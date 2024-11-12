@@ -18,7 +18,10 @@ class UserService {
      * @param {string} params.employeeId - The employee ID.
      * @param {string} params.employeeName - The employee name.
      * @param {Object} [options={}] - Additional options.
-     * @returns {Promise<boolean>} - True if the employee was added successfully, false otherwise.
+     * @returns {Promise<{result: boolean, employee: any}|{result: boolean}>} - True
+     * if the employee was added
+     * successfully, false
+     * otherwise.
      */
     async addEmployee({employeeId, employeeName}, options = {}) {
         try {
@@ -38,45 +41,12 @@ class UserService {
                 lastLogin: new Date(),
                 employeeId: employeeId
             };
-            await this.models.Employee.create(values, options);
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    }
-    
-    /**
-     * Adds an employee and returns the user ID.
-     * @param {Object} params - The parameters.
-     * @param {string} params.employeeId - The employee ID.
-     * @param {string} params.employeeName - The employee name.
-     * @param {Object} [options={}] - Additional options.
-     * @returns {Promise<number>} - The user ID if added successfully, -1 otherwise.
-     */
-    async addEmployeeReturnUserId({employeeId, employeeName}, options = {}) {
-        try {
-            console.debug(
-                `Adding Employee: ${JSON.stringify(
-                    /** @type Employee */
-                    {
-                        employeeId,
-                        employeeName
-                    },
-                    null,
-                    2
-                )}`
-            );
-            const values = {
-                employeeName: employeeName,
-                lastLogin: new Date(),
-                employeeId: employeeId
-            };
+            const getModel = options.returning !== undefined;
             const employee = await this.models.Employee.create(values, options);
-            return employee.key;
+            return getModel ? {result: true, model: employee} : {result: true};
         } catch (error) {
             console.error(error);
-            return -1;
+            return {result: false, error: error};
         }
     }
     

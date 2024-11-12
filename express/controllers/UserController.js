@@ -16,11 +16,13 @@ class UserController {
                               {message: "employeeId or employeeName not found in request body"});
             }
             const addResult = await this.userService.addEmployee({employeeId, employeeName});
-            if (addResult) return res.status(201).json({message: "Employee added"});
-            return res.status(500).json({message: "Internal server error"});
+            if (!addResult.result) {
+                return res.status(500).json({message: "Internal server error: " + addResult.error});
+            }
+            return res.status(201).json({message: "Employee added"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error: " + e});
+            return res.status(500).json({message: "Internal server error: " + err});
         }
     }
     
@@ -38,7 +40,7 @@ class UserController {
             return res.status(404).json({message: "Employee not found"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error: " + e});
+            return res.status(500).json({message: "Internal server error: " + err});
         }
     }
     
@@ -73,7 +75,7 @@ class UserController {
             if (verifyResult.result) {
                 return res.status(200).json({message: "Employee verified"});
             }
-            return res.status(404).json({message: verifyResult.error});
+            return res.status(404).json({message: "Employee not found: " + verifyResult.error});
         } catch (e) {
             console.log(e);
             return res.status(500).json({message: "Internal server error: " + e});
