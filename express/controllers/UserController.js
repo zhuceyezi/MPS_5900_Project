@@ -37,7 +37,7 @@ class UserController {
             }
             const updateResult = await this.userService.updateEmployee({employeeId, lastLogin, employeeName});
             if (updateResult) return res.status(200).json({message: "Employee updated"});
-            return res.status(404).json({message: "Employee not found"});
+            return res.status(200).json({message: "Employee not found"});
         } catch (err) {
             console.log(err);
             return res.status(500).json({message: "Internal server error: " + err});
@@ -75,7 +75,7 @@ class UserController {
             if (verifyResult.result) {
                 return res.status(200).json({message: "Employee verified"});
             }
-            return res.status(404).json({message: "Employee not found: " + verifyResult.error});
+            return res.status(200).json({message: "Employee not found: " + verifyResult.error});
         } catch (e) {
             console.log(e);
             return res.status(500).json({message: "Internal server error: " + e});
