@@ -68,7 +68,7 @@ button {
     margin: 5px;
 }
 
-/* Container for buttons on registration page */
+/* Container for buttons on signup page */
 .registerbutton-container {
     display: flex;
     justify-content: center;
@@ -98,7 +98,7 @@ button {
     display: none;
 }
 
-/* Container for buttons on registration page */
+/* Container for buttons on signup page */
 .user-image {
     max-width: 100%;
     height: auto;
