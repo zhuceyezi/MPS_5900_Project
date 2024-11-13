@@ -176,7 +176,7 @@ async function sendImageToAPI(imageBlob) {
 
             // Store employee data and redirect to success page
             sessionStorage.setItem("employeeData", JSON.stringify(employeeData));
-            window.location.href = "success.html";
+            window.location.href = "confirmation.html";
         } else {
             console.error("Facial recognition failed:", response.statusText);
         }
