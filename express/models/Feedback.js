@@ -14,7 +14,8 @@ const Feedback = database.define("Feedback", {
         references: {
             model: 'Employee',
             key: 'key'
-        }
+        },
+        OnDelete: 'NO ACTION'
     },
     content: {
         type: DataTypes.STRING
@@ -30,5 +31,4 @@ const Feedback = database.define("Feedback", {
                                      underscored: true,
                                      tableName: 'Feedback'
                                  });
-
 module.exports = Feedback;

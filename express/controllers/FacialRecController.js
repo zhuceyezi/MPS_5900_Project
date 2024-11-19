@@ -35,7 +35,7 @@ class FacialRecController {
             }
             const employee = await this.facialRecService.recognizeEmployee(imageBuffer);
             if (employee === null) return res.status(200).json({message: "Employee not found"});
-            return res.status(200).json(employee);
+            return res.status(200).json({message: "Employee found", model: employee});
         } catch (err) {
             console.log(err);
             return res.status(500).json({message: "Internal server error" + err.toString()});
