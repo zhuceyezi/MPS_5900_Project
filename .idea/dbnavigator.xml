@@ -24,10 +24,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" object-ref="schemas/UFP_Employee_Info/tables/Employee" />
-      <object connection-id="35943d3f-23d3-48e2-a34e-f02bf522c842" object-ref="schemas/UFP_Employee_Info/tables/UserFaceMapping" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="35943d3f-23d3-48e2-a34e-f02bf522c842" />

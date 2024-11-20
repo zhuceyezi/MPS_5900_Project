@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="fixed feedback">
+    <list default="true" id="80bbd2ec-5989-4b3b-97dd-e6b6772957ea" name="更改" comment="purge the 404 status override">
       <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/express/apiServices/FacialRecService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/FacialRecService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/express/apiServices/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/apiServices/UserService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/express/controllers/FacialRecController.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/controllers/FacialRecController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/express/controllers/UserController.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/controllers/UserController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/models/UserFaceMapping.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/models/UserFaceMapping.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/express/routers/userRouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/express/routers/userRouter.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +22,17 @@
       <list>
         <option value="JavaScript File" />
       </list>
+    </option>
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
     </option>
   </component>
   <component name="FormatOnSaveOptions">
@@ -55,7 +63,6 @@
       <list>
         <option value="main" />
         <option value="dev" />
-        <option value=".*end" />
       </list>
     </option>
   </component>
@@ -75,6 +82,12 @@
     &quot;repository&quot;: &quot;MPS_5900_Project&quot;
   }
 }</component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.env" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="OptimizeOnSaveOptions">
     <option name="myRunOnSave" value="true" />
   </component>
@@ -94,10 +107,16 @@
     "Node.js.database.js.executor": "Debug",
     "Node.js.databaseSetUp.js.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev-refractor",
-    "javascript.nodejs.core.library.configured.version": "22.8.0",
-    "javascript.nodejs.core.library.typings.version": "22.5.5",
-    "last_opened_file_path": "C:/Users/hln12/Documents/Cornell/INFO5100",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "git-widget-placeholder": "dev-refractor 上的 #54",
+    "go.import.settings.migrated": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "22.11.0",
+    "javascript.nodejs.core.library.typings.version": "22.9.1",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/hln12/Documents/Cornell/INFO5900/MPS_5900_Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -105,7 +124,7 @@
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "C:\\Users\\hln12\\Documents\\Cornell\\INFO5900\\MPS_5900_Project\\node_modules\\prettier",
-    "settings.editor.selected.configurable": "preferences.sourceCode.JavaScript",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PyCharm 2024.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -156,7 +175,23 @@
       <workItem from="1728495556528" duration="4835000" />
       <workItem from="1728503040926" duration="922000" />
       <workItem from="1729985409985" duration="567000" />
-      <workItem from="1730912300600" duration="3612000" />
+      <workItem from="1730997375503" duration="803000" />
+      <workItem from="1731004845752" duration="777000" />
+      <workItem from="1731079863818" duration="684000" />
+      <workItem from="1731089711192" duration="11523000" />
+      <workItem from="1731341406632" duration="409000" />
+      <workItem from="1731356481371" duration="7326000" />
+      <workItem from="1731443043853" duration="5441000" />
+      <workItem from="1731533808819" duration="4199000" />
+      <workItem from="1731620263300" duration="130000" />
+      <workItem from="1731879679220" duration="1847000" />
+      <workItem from="1731957370623" duration="4381000" />
+      <workItem from="1732044521098" duration="3518000" />
+      <workItem from="1732119290984" duration="84000" />
+      <workItem from="1732119386663" duration="759000" />
+      <workItem from="1732128188577" duration="54000" />
+      <workItem from="1732135363996" duration="151000" />
+      <workItem from="1732135541807" duration="853000" />
     </task>
     <task id="LOCAL-00001" summary="initialized node express">
       <option name="closed" value="true" />
@@ -246,15 +281,47 @@
       <option name="project" value="LOCAL" />
       <updated>1729920632230</updated>
     </task>
-    <task id="LOCAL-00012" summary="fixed feedback">
+    <task id="LOCAL-00012" summary="refractor, added deleteEmployee">
       <option name="closed" value="true" />
-      <created>1730845604485</created>
+      <created>1731099145996</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1730845604485</updated>
+      <updated>1731099145996</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="purged collection parameter, modified for better error messages.">
+      <option name="closed" value="true" />
+      <created>1731445862064</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1731445862064</updated>
+    </task>
+    <task id="LOCAL-00014" summary="purged collection parameter, modified for better error messages.">
+      <option name="closed" value="true" />
+      <created>1731449639102</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1731449639102</updated>
+    </task>
+    <task id="LOCAL-00015" summary="purge the 404 status override">
+      <option name="closed" value="true" />
+      <created>1731536416672</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1731536416672</updated>
+    </task>
+    <task id="LOCAL-00016" summary="purge the 404 status override">
+      <option name="closed" value="true" />
+      <created>1732046138546</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1732046138546</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,7 +351,13 @@
     <MESSAGE value="added more comments and updated folder names." />
     <MESSAGE value="wrapped awsExamples into AwsService. Added first version of UserFaceMapping. Corrected file names and class export names to pascalCamel." />
     <MESSAGE value="fixed static image" />
-    <MESSAGE value="fixed feedback" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed feedback" />
+    <MESSAGE value="refractor, added deleteEmployee" />
+    <MESSAGE value="purged collection parameter, modified for better error messages." />
+    <MESSAGE value="purge the 404 status override" />
+    <option name="LAST_COMMIT_MESSAGE" value="purge the 404 status override" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
   </component>
 </project>
