@@ -3,7 +3,7 @@ class UserController {
         this.userService = userService;
         this.facialRecService = facialRecService;
     }
-    
+
     //field data should be in the request body as json
     async addEmployee(req, res) {
         try {
@@ -12,20 +12,20 @@ class UserController {
             const employeeName = body.employeeName;
             if (employeeId === undefined || employeeName === undefined) {
                 return res.status(400)
-                          .json(
-                              {message: "employeeId or employeeName not found in request body"});
+                    .json(
+                        {message: "employeeId or employeeName not found in request body"});
             }
             const addResult = await this.userService.addEmployee({employeeId, employeeName});
             if (!addResult.result) {
                 return res.status(500).json({message: "Internal server error: " + addResult.error});
             }
-            return res.status(201).json({message: "Employee added"});
+            return res.status(201).json({message: "Employee added", debug: addResult});
         } catch (err) {
             console.log(err);
             return res.status(500).json({message: "Internal server error: " + err});
         }
     }
-    
+
     async updateEmployee(req, res) {
         try {
             const body = req.body;
@@ -43,7 +43,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error: " + err});
         }
     }
-    
+
     async addFeedback(req, res) {
         try {
             const body = req.body;
@@ -63,7 +63,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error: " + e});
         }
     }
-    
+
     async verifyEmployee(req, res) {
         try {
             const employeeId = req.query.employeeId;
@@ -81,7 +81,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error: " + e});
         }
     }
-    
+
     async deleteEmployee(req, res) {
         try {
             const body = req.body;

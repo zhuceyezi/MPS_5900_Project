@@ -17,7 +17,7 @@ class FacialRecService {
         this.awsService = awsService;
         this.models = models
     }
-    
+
     /**
      * Adds an employee to the system.
      * @param {Object} params - The parameters.
@@ -34,14 +34,13 @@ class FacialRecService {
         try {
             console.debug(employeeId, employeeName, imageBuffer, collectionId);
             const employeeResponse = await this.userService.addEmployee({employeeId, employeeName},
-                                                                        {
-                                                                            transaction: trans,
-                                                                            returning: true
-                                                                        });
+                {
+                    transaction: trans,
+                    returning: true
+                });
             const employee = employeeResponse.model;
-            console.log(employee);
             if (!employeeResponse.result) {
-                return {result: false, error: employee.error};
+                return {result: false, error: employeeResponse.error};
             }
             [faceId, imageId] = await this.awsService.indexFaces(imageBuffer, employeeName);
             if (faceId === undefined || imageId === undefined) {
@@ -51,7 +50,7 @@ class FacialRecService {
             }
             console.log(imageId, faceId);
             await this.models.UserFaceMapping.create({employeeKey: employee.key, imageId: imageId, faceId: faceId},
-                                                     {transaction: trans});
+                {transaction: trans});
             await trans.commit();
             return {result: true};
         } catch (error) {
@@ -61,7 +60,7 @@ class FacialRecService {
             return {result: false, error: error};
         }
     }
-    
+
     /**
      * Deletes all faces in a collection.
      * @returns {Promise<{result: boolean, error}>} - True if all faces were deleted successfully, false otherwise.
@@ -74,7 +73,7 @@ class FacialRecService {
             return {result: false, error: error};
         }
     }
-    
+
     /**
      * Deletes a face associated with an employee
      * @param employeeId
@@ -100,7 +99,7 @@ class FacialRecService {
             return {result: false, error: e};
         }
     }
-    
+
     /**
      * Recognizes an employee based on an image.
      * @param {Buffer} imageBuffer - The image buffer.

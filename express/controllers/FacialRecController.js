@@ -2,7 +2,7 @@ class FacialRecController {
     constructor(facialRecService) {
         this.facialRecService = facialRecService;
     }
-    
+
     async addEmployee(req, res) {
         try {
             const body = req.body;
@@ -15,9 +15,9 @@ class FacialRecController {
             }
             const addResult = await this.facialRecService.addEmployee(
                 {employeeId, employeeName, imageBuffer});
-            if (!addResult) {
+            if (!addResult.result) {
                 return res.status(500)
-                          .json({message: "Internal server error: addEmployee failed" + addResult.error.toString()});
+                    .json({message: "Internal server error: addEmployee failed: " + addResult.error.toString()});
             }
             return res.status(201).json("Employee added");
         } catch (err) {
@@ -25,7 +25,7 @@ class FacialRecController {
             return res.status(500).json({message: "Internal server error: " + err.toString()});
         }
     }
-    
+
     async validateEmployee(req, res) {
         try {
             const collectionId = process.env.COLLECTION_ID;
@@ -41,7 +41,7 @@ class FacialRecController {
             return res.status(500).json({message: "Internal server error" + err.toString()});
         }
     }
-    
+
     async deleteAllFaces(req, res) {
         try {
             const deleteResult = await this.facialRecService.deleteAllFaces();
@@ -55,7 +55,7 @@ class FacialRecController {
             return res.status(500).json({message: "Internal server error" + err.toString()});
         }
     }
-    
+
 }
 
 
