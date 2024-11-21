@@ -2,12 +2,6 @@ const {database} = require("../config/databaseSetUp");
 const {DataTypes} = require("sequelize");
 
 const Feedback = database.define("Feedback", {
-    id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true
-    },
     employeeKey: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -15,7 +9,14 @@ const Feedback = database.define("Feedback", {
             model: 'Employee',
             key: 'key'
         },
-        OnDelete: 'NO ACTION'
+        OnDelete: 'CASCADE',
+        unique: true
+    },
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
     },
     content: {
         type: DataTypes.STRING

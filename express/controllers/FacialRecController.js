@@ -30,8 +30,8 @@ class FacialRecController {
         try {
             const collectionId = process.env.COLLECTION_ID;
             const imageBuffer = req.file.buffer;
-            if (collectionId === undefined || imageBuffer === undefined) {
-                return res.status(400).json({message: "Bad request"});
+            if (imageBuffer === undefined || collectionId === undefined) {
+                return res.status(400).json({message: "Bad request, check if all required fields exist."});
             }
             const employee = await this.facialRecService.recognizeEmployee(imageBuffer);
             if (employee === null) return res.status(200).json({message: "Employee not found"});
