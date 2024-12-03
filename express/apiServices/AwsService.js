@@ -88,45 +88,17 @@ class AwsService {
     /**
      * Deletes all faces in a collection.
      * @param {string} collectionId - The ID of the collection.
-     * @returns {Promise<boolean>} - True if faces are deleted, false otherwise.
+     * @returns {Promise<{result: boolean, error}>} - True if faces are deleted, false otherwise.
      */
-    async deleteAllFaces(collectionId) {
+    async deleteAllFaces() {
         const faceIds = [];
-        const faceList = await this.listFaces(collectionId);
+        const faceList = await this.listFaces(process.env.COLLECTION_ID);
         console.log(faceList);
         for (const face of faceList.Faces) {
             faceIds.push(face.FaceId);
         }
         console.log(faceIds);
-        return this.deleteFaces(collectionId, faceIds);
-    }
-    
-    /**
-     * Searches for faces in an image within a collection.
-     * @param {string} collectionId - The ID of the collection.
-     * @param {string} imagePath - The path to the image file.
-     * @param {number} [faceMatchThreshold=99] - The face match threshold.
-     * @returns {Promise<void>}
-     */
-    async #searchFacesByImage(collectionId, imagePath, faceMatchThreshold = 99) {
-        try {
-            const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
-            const params = {
-                CollectionId: collectionId,
-                FaceMatchThreshold: faceMatchThreshold,
-                Image: {
-                    Bytes: imageBytesBuffer
-                },
-                MaxFaces: 1,
-                QualityFilter: null
-            };
-            const command = new SearchFacesByImageCommand(params);
-            const response = await this.client.send(command);
-            const faceMatchInfo = response['FaceMatches'];
-            console.log(JSON.stringify(response, null, 2));
-        } catch (err) {
-            console.log(err);
-        }
+        return this.deleteFaces(process.env.COLLECTION_ID, faceIds);
     }
     
     /**
@@ -136,11 +108,11 @@ class AwsService {
      * @param {number} [faceMatchThreshold=99] - The face match threshold.
      * @returns {Promise<string[]|undefined>} - [imageId, FaceId] if found, otherwise undefined.
      */
-    async searchFacesByImage(collectionId, imageBuffer, faceMatchThreshold = 99) {
+    async searchFacesByImage(imageBuffer, faceMatchThreshold = 99) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
             const params = {
-                CollectionId: collectionId,
+                CollectionId: process.env.COLLECTION_ID,
                 FaceMatchThreshold: faceMatchThreshold,
                 Image: {
                     Bytes: imageBytesBuffer
@@ -162,53 +134,17 @@ class AwsService {
     }
     
     /**
-     * Indexes faces in an image within a collection.
-     * @param {string} collectionId - The ID of the collection.
-     * @param {string} imagePath - The path to the image file.
-     * @param {string} [imageName] - The name of the image.
-     * @returns {Promise<boolean>} - True if faces are indexed, false otherwise.
-     */
-    async #indexFaces(collectionId, imagePath, imageName = undefined) {
-        try {
-            const imageBytesBuffer = await this.#resizeImage(fs.readFileSync(imagePath));
-            let externalImageIdSplit;
-            let externalImageId;
-            if (imageName === undefined) {
-                externalImageIdSplit = imagePath.split("/");
-                externalImageId = externalImageIdSplit[externalImageIdSplit.length - 1];
-            }
-            console.log(imageName === undefined ? externalImageId : imageName);
-            const params = {
-                CollectionId: collectionId,
-                DetectionAttributes: ["ALL"],
-                ExternalImageId: imageName === undefined ? externalImageId : imageName,
-                Image: {
-                    Bytes: imageBytesBuffer
-                },
-                MaxFaces: 1,
-                QualityFilter: null
-            };
-            const command = new IndexFacesCommand(params);
-            const response = await this.client.send(command);
-            return true;
-        } catch (err) {
-            console.log(err);
-            return false;
-        }
-    }
-    
-    /**
      * Indexes faces in an image buffer within a collection.
      * @param {string} collectionId - The ID of the collection.
      * @param {Buffer} imageBuffer - The image buffer.
      * @param employeeName - The name of the employee.
      * @returns {Promise<string[]|undefined>} - [imageId, FaceId] if indexed, otherwise undefined.
      */
-    async indexFaces(collectionId, imageBuffer, employeeName = null) {
+    async indexFaces(imageBuffer, employeeName = null) {
         try {
             const imageBytesBuffer = await this.#resizeImage(imageBuffer);
             const params = {
-                CollectionId: collectionId,
+                CollectionId: process.env.COLLECTION_ID,
                 DetectionAttributes: ["ALL"],
                 Image: {
                     Bytes: imageBytesBuffer
@@ -236,10 +172,10 @@ class AwsService {
      * @param {string[]} [faceIds=[]] - The list of face IDs.
      * @returns {Promise<Object|null>} - The response from AWS Rekognition or null if an error occurs.
      */
-    async listFaces(collectionId, faceIds = []) {
+    async listFaces(faceIds = []) {
         try {
             const params = {
-                CollectionId: collectionId,
+                CollectionId: process.env.COLLECTION_ID,
                 MaxResults: 10
             };
             const command = new ListFacesCommand(params);
@@ -254,14 +190,13 @@ class AwsService {
     
     /**
      * Deletes faces from a collection.
-     * @param {string} collectionId - The ID of the collection.
      * @param {string[]} faceIds - The list of face IDs to delete.
      * @returns {Promise<{result: boolean, error}>} - True if faces are deleted, false otherwise.
      */
-    async deleteFaces(collectionId, faceIds) {
+    async deleteFaces(faceIds) {
         try {
             const params = {
-                CollectionId: collectionId,
+                CollectionId: process.env.COLLECTION_ID,
                 FaceIds: faceIds
             };
             const command = new DeleteFacesCommand(params);

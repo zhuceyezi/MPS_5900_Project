@@ -1,55 +1,50 @@
 class FacialRecController {
-    constructor(facialRecService, collectionId) {
+    constructor(facialRecService) {
         this.facialRecService = facialRecService;
-        this.collectionId = collectionId;
     }
-    
+
     async addEmployee(req, res) {
         try {
             const body = req.body;
             const employeeId = body.employeeId;
             const employeeName = body.employeeName;
-            const collectionId = this.collectionId;
             const imageBuffer = req.file.buffer;
-            console.log(employeeId, employeeName, collectionId, imageBuffer);
-            if (employeeId === undefined || employeeName === undefined || collectionId === undefined || imageBuffer === undefined) {
+            console.log(employeeId, employeeName, imageBuffer);
+            if (employeeId === undefined || employeeName === undefined || imageBuffer === undefined) {
                 return res.status(400).json({message: "Bad request"});
             }
             const addResult = await this.facialRecService.addEmployee(
-                {employeeId, employeeName, imageBuffer, collectionId});
-            if (addResult === false) {
-                return res.status(500).json({message: "Internal server error: addEmployee failed"});
+                {employeeId, employeeName, imageBuffer});
+            if (!addResult.result) {
+                return res.status(500)
+                    .json({message: "Internal server error: addEmployee failed: " + addResult.error.toString()});
             }
-            return res.status(201).json(addResult);
+            return res.status(201).json("Employee added");
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error: " + err});
+            return res.status(500).json({message: "Internal server error: " + err.toString()});
         }
     }
-    
+
     async validateEmployee(req, res) {
         try {
-            const collectionId = this.collectionId;
+            const collectionId = process.env.COLLECTION_ID;
             const imageBuffer = req.file.buffer;
-            if (collectionId === undefined || imageBuffer === undefined) {
-                return res.status(400).json({message: "Bad request"});
+            if (imageBuffer === undefined || collectionId === undefined) {
+                return res.status(400).json({message: "Bad request, check if all required fields exist."});
             }
-            const employee = await this.facialRecService.recognizeEmployee(collectionId, imageBuffer);
-            if (employee === null) return res.status(404).json({message: "Employee not found"});
-            return res.status(200).json(employee);
+            const employee = await this.facialRecService.recognizeEmployee(imageBuffer);
+            if (employee === null) return res.status(200).json({message: "Employee not found"});
+            return res.status(200).json({message: "Employee found", model: employee});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error" + err.toString()});
         }
     }
-    
+
     async deleteAllFaces(req, res) {
         try {
-            const collectionId = this.collectionId;
-            if (collectionId === undefined) {
-                return res.status(400).json({message: "Bad request"});
-            }
-            const deleteResult = await this.facialRecService.deleteAllFaces(collectionId);
+            const deleteResult = await this.facialRecService.deleteAllFaces();
             console.log(deleteResult);
             if (deleteResult === false) {
                 return res.status(500).json({message: "Internal server error"});
@@ -57,10 +52,10 @@ class FacialRecController {
             return res.status(200).json({message: "All faces deleted"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error"});
+            return res.status(500).json({message: "Internal server error" + err.toString()});
         }
     }
-    
+
 }
 
 

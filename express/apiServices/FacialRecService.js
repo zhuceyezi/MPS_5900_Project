@@ -17,55 +17,69 @@ class FacialRecService {
         this.awsService = awsService;
         this.models = models
     }
-    
+
     /**
      * Adds an employee to the system.
      * @param {Object} params - The parameters.
      * @param {string} params.employeeId - The employee ID.
      * @param {string} params.employeeName - The employee name.
      * @param {Buffer} params.imageBuffer - The image buffer.
-     * @param {string} params.collectionId - The collection ID.
-     * @returns {Promise<boolean>} - True if the employee was added successfully, false otherwise.
+     * @returns {Promise<{result: boolean, error}>} - True if the employee was added successfully, false otherwise.
      */
-    async addEmployee({employeeId, employeeName, imageBuffer, collectionId}) {
-        console.log(this.userService);
+    async addEmployee({employeeId, employeeName, imageBuffer}) {
+        const collectionId = process.env.COLLECTION_ID;
         const trans = await database.transaction();
+        let faceId = undefined;
+        let imageId = undefined;
         try {
             console.debug(employeeId, employeeName, imageBuffer, collectionId);
-            const employeeResult = await this.userService.addEmployeeReturnUserId({employeeId, employeeName},
-                                                                                  {transaction: trans});
-            const [faceId, imageId] = await this.awsService.indexFaces(collectionId, imageBuffer, employeeName);
-            if (faceId === undefined || imageId === undefined || employeeResult === -1) {
+            const employeeResponse = await this.userService.addEmployee({employeeId, employeeName},
+                {
+                    transaction: trans,
+                    returning: true
+                });
+            const employee = employeeResponse.model;
+            if (!employeeResponse.result) {
+                return {result: false, error: employeeResponse.error};
+            }
+            [faceId, imageId] = await this.awsService.indexFaces(imageBuffer, employeeName);
+            if (faceId === undefined || imageId === undefined) {
                 console.log("Error in adding employee");
                 await trans.rollback();
-                return false;
+                return {result: false, error: "faceId or imageId is undefined"};
             }
             console.log(imageId, faceId);
-            await this.models.UserFaceMapping.create({employeeKey: employeeResult, imageId: imageId, faceId: faceId},
-                                                     {transaction: trans});
+            await this.models.UserFaceMapping.create({employeeKey: employee.key, imageId: imageId, faceId: faceId},
+                {transaction: trans});
             await trans.commit();
-            return true;
+            return {result: true};
         } catch (error) {
             console.error(error);
             await trans.rollback();
-            return false;
+            await this.awsService.deleteFaces([faceId])
+            return {result: false, error: error};
         }
     }
-    
+
     /**
      * Deletes all faces in a collection.
-     * @param {string} collectionId - The collection ID.
-     * @returns {Promise<boolean>} - True if all faces were deleted successfully, false otherwise.
+     * @returns {Promise<{result: boolean, error}>} - True if all faces were deleted successfully, false otherwise.
      */
-    async deleteAllFaces(collectionId) {
+    async deleteAllFaces() {
         try {
-            await this.awsService.deleteAllFaces(collectionId);
-            return true;
+            await this.awsService.deleteAllFaces(process.env.COLLECTION_ID);
+            return {result: true};
         } catch (error) {
-            return false;
+            return {result: false, error: error};
         }
     }
-    
+
+    /**
+     * Deletes a face associated with an employee
+     * @param employeeId
+     * @param employeeName
+     * @returns {Promise<{result: boolean, error}|{result: boolean}|{result: boolean, error: string}>}
+     */
     async deleteFace({employeeId, employeeName}) {
         try {
             const collectionId = process.env.COLLECTION_ID;
@@ -74,7 +88,7 @@ class FacialRecService {
             if (faceId === null || faceId.length === 0) {
                 return {result: false, error: "No face associated with that employee was found."};
             }
-            const deleteResult = await this.awsService.deleteFaces(collectionId, [faceId]);
+            const deleteResult = await this.awsService.deleteFaces([faceId]);
             if (!deleteResult.result) {
                 console.error(deleteResult.error);
                 return {result: false, error: deleteResult.error};
@@ -85,16 +99,15 @@ class FacialRecService {
             return {result: false, error: e};
         }
     }
-    
+
     /**
      * Recognizes an employee based on an image.
-     * @param {string} collectionId - The collection ID.
      * @param {Buffer} imageBuffer - The image buffer.
      * @returns {Promise<Object|null>} - The employee object if found, null otherwise.
      */
-    async recognizeEmployee(collectionId, imageBuffer) {
+    async recognizeEmployee(imageBuffer) {
         try {
-            const amazonImageId = await this.awsService.searchFacesByImage(collectionId, imageBuffer);
+            const amazonImageId = await this.awsService.searchFacesByImage(imageBuffer);
             console.log(amazonImageId);
             if (amazonImageId === undefined) {
                 return null;

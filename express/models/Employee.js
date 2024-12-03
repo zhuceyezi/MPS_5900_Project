@@ -37,5 +37,4 @@ const Employee = database.define("Employee", {
                                      underscored: true,
                                      tableName: 'Employee'
                                  });
-
 module.exports = Employee;

@@ -3,7 +3,7 @@ class UserController {
         this.userService = userService;
         this.facialRecService = facialRecService;
     }
-    
+
     //field data should be in the request body as json
     async addEmployee(req, res) {
         try {
@@ -12,18 +12,20 @@ class UserController {
             const employeeName = body.employeeName;
             if (employeeId === undefined || employeeName === undefined) {
                 return res.status(400)
-                          .json(
-                              {message: "employeeId or employeeName not found in request body"});
+                    .json(
+                        {message: "employeeId or employeeName not found in request body"});
             }
             const addResult = await this.userService.addEmployee({employeeId, employeeName});
-            if (addResult) return res.status(201).json({message: "Employee added"});
-            return res.status(500).json({message: "Internal server error"});
+            if (!addResult.result) {
+                return res.status(500).json({message: "Internal server error: " + addResult.error});
+            }
+            return res.status(201).json({message: "Employee added", debug: addResult});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error: " + e});
+            return res.status(500).json({message: "Internal server error: " + err});
         }
     }
-    
+
     async updateEmployee(req, res) {
         try {
             const body = req.body;
@@ -35,13 +37,13 @@ class UserController {
             }
             const updateResult = await this.userService.updateEmployee({employeeId, lastLogin, employeeName});
             if (updateResult) return res.status(200).json({message: "Employee updated"});
-            return res.status(404).json({message: "Employee not found"});
+            return res.status(200).json({message: "Employee not found"});
         } catch (err) {
             console.log(err);
-            return res.status(500).json({message: "Internal server error: " + e});
+            return res.status(500).json({message: "Internal server error: " + err});
         }
     }
-    
+
     async addFeedback(req, res) {
         try {
             const body = req.body;
@@ -61,7 +63,7 @@ class UserController {
             return res.status(500).json({message: "Internal server error: " + e});
         }
     }
-    
+
     async verifyEmployee(req, res) {
         try {
             const employeeId = req.query.employeeId;
@@ -73,13 +75,13 @@ class UserController {
             if (verifyResult.result) {
                 return res.status(200).json({message: "Employee verified"});
             }
-            return res.status(404).json({message: verifyResult.error});
+            return res.status(200).json({message: "Employee not found: " + verifyResult.error});
         } catch (e) {
             console.log(e);
             return res.status(500).json({message: "Internal server error: " + e});
         }
     }
-    
+
     async deleteEmployee(req, res) {
         try {
             const body = req.body;
