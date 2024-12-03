@@ -29,10 +29,10 @@ class FacialRecController {
     async validateEmployee(req, res) {
         try {
             const collectionId = process.env.COLLECTION_ID;
-            const imageBuffer = req.file.buffer;
-            if (imageBuffer === undefined || collectionId === undefined) {
+            if (req.file === undefined || collectionId === undefined) {
                 return res.status(400).json({message: "Bad request, check if all required fields exist."});
             }
+            const imageBuffer = req.file.buffer;
             const employee = await this.facialRecService.recognizeEmployee(imageBuffer);
             if (employee === null) return res.status(200).json({message: "Employee not found"});
             return res.status(200).json({message: "Employee found", model: employee});

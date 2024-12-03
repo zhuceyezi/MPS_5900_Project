@@ -147,21 +147,20 @@ const base64ToImageURl = async (base64Image) => {
  */
 async function sendImageToAPI(imageBlob) {
     try {
-        //create FormData and append the image
         const formData = new FormData();
-
         formData.append("image", imageBlob, "photo.jpg");
-
         upload_endpoint = "http://localhost:3000/facial/validate";
         const response = await fetch(upload_endpoint, {
             method: "POST",
-            body: formData,
+            body: formData
         });
-
         if (response.status === 200) {
-            // Process successful facial recognition
-            const employeeData = await response.json();
-            // Log employee information for debugging
+            const employeeResponse = await response.json();
+            if (employeeResponse.message === "Employee not found") {
+                console.log("Employee not found");
+                return;
+            }
+            const employeeData = employeeResponse.model;
             console.log(employeeData);
             console.log("✅ Facial recognition successful!");
             console.log("Employee Information:");
@@ -173,14 +172,11 @@ async function sendImageToAPI(imageBlob) {
                 new Date(employeeData.lastLogin).toLocaleString()
             );
             console.log("------------------------");
-
-            // Store employee data and redirect to success page
             sessionStorage.setItem("employeeData", JSON.stringify(employeeData));
             window.location.href = "confirmation.html";
         } else {
             console.error("Facial recognition failed:", response.statusText);
         }
-
     } catch (error) {
         console.error("Error during facial recognition:", error.message);
     }
