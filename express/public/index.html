@@ -1,13 +1,55 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Main Page</title>
+    <link rel="stylesheet" href="css/styles.css"/>
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
+<header class="header">
+    <a href="index.html">
+        <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo">
+    </a>
+</header>
+
+<main>
+    <div id="camera-container">
+        <div id="instructions">
+            <h4>Please remove any accessories covering your eyes!</h4>
+            <h4>Align your face with the center of the frame!</h4>
+        </div>
+
+        <!-- Live camera view -->
+        <video id="video" autoplay></video>
+        
+
+        <a href="accountlogin.html">
+            <button id="signin/up">Account Login</button>
+            <!-- Button to Account login -->
+        </a>
+
+        <a href="signup.html">
+            <button id="signin/up">Sign Up</button>
+            <!-- Button to sign up -->
+        </a>
+
+        <a href="help.html">
+            <button id="help" class="help-button"><img src="img/Help_Button_icon.png" alt="helpicon" class="buttonicon">
+                Help
+            </button>
+        </a>
+    </div>
+</main>
+
+<script
+        defer
+        src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.min.js"
+></script>
+
+<script src="js/index.js"></script>
 </body>
 
 </html>

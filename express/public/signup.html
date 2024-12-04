@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html">
+            <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo">
+        </a>
+    </header>
+    <main>
+    
+        <div class="container">
+            <form id="registerform">
+                <div class="report-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="username" placeholder="Enter your name" required>
+                </div>
+                <div class="report-group">
+                    <label for="id">ID</label>
+                    <input type="text" id="userid" placeholder="Enter your ID" required>
+                </div>
+            
+                            
+                <div id="camera-container">
+                    <video id="video" autoplay></video>
+                    <canvas id="canvas" style="display: none;"></canvas> <!-- Hidden canvas for photo -->
+                    <img id="capturedPhoto" alt="Captured photo will appear here" style="display: none;"/> <!-- Element to show captured photo -->
+                    
+                </div>
+
+                <div class="registerbutton-container" id="leftrightbutton">
+                    <button type="button" id="regcapture">Take Photo</button>
+                    <button type="button" id="retake" style="display: none;">Retake Photo</button> <!-- Initially hidden --> 
+                    <button type="submit" id="submit" disabled>Submit</button>
+                </div>
+            </form>
+            <div>
+                <a href="index.html">
+                    <button class="back-button">Back</button> <!-- Button to back to index page -->
+                </a>
+            </div>
+        </div>         
+           
+        
+        <a href="help.html">
+            <button id="help" class="help-button"><img src= "img/Help_Button_icon.png" alt="helpicon" class="buttonicon" > Help </button>
+        </a>  
+</main>  
+
+</body>
+<script src="js/signup.js"></script>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Confirmation Page</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+
+</head>
+
+<body data-next-page="index.html" data-countdown-duration="15">
+    <!-- Logo -->
+    <header class="header">
+        <a href="index.html">
+            <img src="img/UFPT_Logo_RGB_transparent.png" alt="Logo" class="logo">
+        </a>
+    </header>
+
+    <main>
+    <div id="successpage">
+        <!--welcome message-->
+        <div class="welcome-message">
+        <h2 class="information-inline-container">Good Morning, </h2>
+        <h2 id="employeeName" class="information-inline-container">Name</h2>
+        <h2 class="information-inline-container">!</h2>
+         </div>
+        <h3>Please confirm your information is correct.</h3>
+   
+<!--Display employee information-->
+        <div>
+            <p class = "information-inline-container">Your ID: </p>
+            <div id="employeeId" class="textspace" class ="information-inline-container"></div>
+            </br>
+            <p class = "information-inline-container">Your Name: </p>
+            <div id="employeeName2" class="textspace" class ="information-inline-container"></div>
+            </br>
+            <p class = "information-inline-container">Last Login</p>
+            <div id="lastLogin" class="textspace" class ="information-inline-container"></div>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="button-container">
+            <a href="index.html">
+                <button id="confirminfor">Confirm 
+                    (<span id="countdown">5</span>s)
+                </button>
+            </a>
+            
+            <a href="notme.html">
+                <button id="notme">Not Me</button>
+            </a>    
+        </div>   
+
+    </div>
+
+    <!-- Help -->
+    <a href="help.html">
+        <button id="help" class="help-button"><img src= "img/Help_Button_icon.png" alt="helpicon" class="buttonicon" > Help </button>
+    </a>    
+    
+    <script src="js/confirmation.js" defer></script>
+    </main>
+
+</body>
+
+</html>
